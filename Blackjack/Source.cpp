@@ -46,6 +46,8 @@ int main() {
 					cout << endl;
 					break;
 				case 2:
+					players[i].print();
+					cout << endl;
 					break;
 				}
 				valid = true;
