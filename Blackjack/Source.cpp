@@ -28,26 +28,28 @@ int main() {
 	}
 
 	//for (int i = 0; i < players.size(); i++) {
-	//	//menu();
 	//	cout << "Player " << i + 1 << " betting: ";
 	//	cin >> bets;
-	//	//players[i].distributeCards();
 	//}
 
 	do {
-		for (int i = 0; i < players.size(); i++) {
-			cout << "Player: " << i + 1 << endl;
-			cout << "Hit(1) OR Stand(2): ";
-			cin >> choice;
+		for (int round = 0; round < 5; round++) {
+			for (int i = 0; i < players.size(); i++) {
+				cout << "Player: " << i + 1 << " | Hit(1) OR Stand(2): ";
+				cin >> choice;
 
-			switch (choice) {
-			case 1:
-				players[i].distributeCards();
-				break;
-			case 2:
-				break;
+				switch (choice) {
+				case 1:
+					players[i].distributeCards();
+					cout << "Current Card: ";
+					players[i].print();
+					cout << endl;
+					break;
+				case 2:
+					break;
+				}
+				valid = true;
 			}
-			valid = true;
 		}
 	} while (!valid);
 

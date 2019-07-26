@@ -17,10 +17,9 @@ public:
 	virtual void distributeCards() {
 		Deck deck;
 		deck.createDeck();
-		for (int i = 0; i < 1; i++) {
-			cout << deck.drawCards() << " ";
-		}
-		cout << endl;
+		
+		hand.push_back(deck.drawCards());
+		
 	}
 
 	int getNumberPlayer() {
@@ -29,5 +28,11 @@ public:
 
 	int getAmountOfMoney() {
 		return this->startingAmountOfMoney;
+	}
+
+	void print() {
+		for (int i = 0; i < hand.size(); i++) {
+			cout << hand[i] << " ";
+		}
 	}
 };
