@@ -18,6 +18,7 @@ public:
 		currentCardCount = 0;
 	}
 	void createDeck() {
+
 		for (int set = 0; set < 24; set++) {
 			for (int counts = 0; counts < cards.size(); counts++) {
 				cardDeck.push_back(cards[counts]);
@@ -26,7 +27,6 @@ public:
 		}
 		for (int index = 0; index < cardDeck.size(); index++) {
 			stackOfDeck.push(cardDeck[index]);
-
 		}
 	}
 
