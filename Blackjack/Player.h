@@ -9,11 +9,14 @@ private:
 	int numberOfPlayers;
 	int startingAmountOfMoney;
     int remainMoney;
+	int totalMoney;
+	int playerBet;
 	vector<string>hand;
 public:
 	Players(int numberOfPlayers)
 	{
 		this->startingAmountOfMoney = 100;
+		this->totalMoney = 100;
 		this->numberOfPlayers = numberOfPlayers;
 	}
 
@@ -57,6 +60,7 @@ public:
 				else {
 					total += 1;
 				}
+				break;
 			}
             total += getHandTotal(hand[i]);
         }
@@ -70,20 +74,32 @@ public:
 	//	}
 	//	return total;
 	//}
+
+	int getBettingAMount(int amount) {
+		playerBet = amount;
+		getRemainingBalance();
+		return this->playerBet;
+	}
+	int getBet() {
+		return this->playerBet;
+	}
+	int getStartingBalance() {
+		return this->startingAmountOfMoney;
+	}
+
+	int getRemainingBalance() {
+		this->totalMoney -= this->playerBet;
+		return this->totalMoney;
+	}
     int getNumberPlayer() {
         return this->numberOfPlayers;
     }
     
-    int getAmountOfMoney() {
-        return this->startingAmountOfMoney;
+    int getWinningMoney(){
+		this->totalMoney += this->playerBet * 2;
+		return totalMoney;
     }
-    
-    int getRemainingMoney(){
-        return this->remainMoney;
-    }
-    int placingBet(int amount){
-        remainMoney = startingAmountOfMoney - amount;
-        return remainMoney;
-    }
-    
+	int getBalance() {
+		return this->totalMoney;
+	}
 };
