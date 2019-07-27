@@ -58,17 +58,16 @@ int main() {
             cout << "\n-----------------------"<<endl;
 
             do{
-                
             cout << "Player: " << i + 1 << " | Hit(1) OR Stand(2): ";
             cin >> choice;
-            switch (choice) {
-        
+            switch (choice) {        
             case 1:
                 cout << "-----------------------"<<endl;
-                cout << "   Player: " << i+ 1 << "|" << "$: " << players[i].placingBet(bets) <<endl;
+                cout << "   Player: " << i+ 1 << "|" << "$: " << players[i].getRemainingMoney() <<endl;
                 players[i].distributeCards();
                 cout << "Current hand: ";
                 players[i].print();
+				cout << "\nTotal: " << players[i].getTotal();
                 cout << "\n-----------------------"<<endl;
                 cout << endl;
                 break;
@@ -82,6 +81,7 @@ int main() {
             }
             }while(choice!=2);
             
+
         }
  
 

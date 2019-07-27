@@ -2,13 +2,13 @@
 #include <iostream>
 #include <stdlib.h>
 #include "Deck.h"
+#include "Dealer.h"
 
-class Players : public Deck {
+class Players : public Dealer {
 private:
 	int numberOfPlayers;
 	int startingAmountOfMoney;
     int remainMoney;
-    int playerHandCards;
 	vector<string>hand;
 public:
 	Players(int numberOfPlayers)
@@ -20,9 +20,9 @@ public:
 	virtual void distributeCards() {
 		Deck deck;
 		deck.createDeck();
+		//Dealer card;
+		//hand.push_back(card.distributeCard());
 		hand.push_back(deck.drawCards());
-        playerHandCards++;
-		
 	}
 
     int getHandTotal(string values){
@@ -46,19 +46,30 @@ public:
     
     int getTotal(){
         int total = 0;
+		char choice;
         for (int i = 0; i < hand.size(); i++) {
+			if (hand[i] == "A") {
+				cout << "\nDo You wany A to be 11 points(Y/N): ";
+				cin >> choice;
+				if (choice == 'Y' || choice == 'y') {
+					total += 11;
+				}
+				else {
+					total += 1;
+				}
+			}
             total += getHandTotal(hand[i]);
         }
         return total;
     }
     
-    void getCount(){
-        for(int i = 0; i < 2; i++){
-            distributeCards();
-    }
-    }
-    
-    
+	//int getCurrentPoint() {
+	//	int total = 0;
+	//	for (int index = 0; index < hand.size(); index++) {
+	//		total += getHandTotal(hand[index]);
+	//	}
+	//	return total;
+	//}
     int getNumberPlayer() {
         return this->numberOfPlayers;
     }
@@ -75,7 +86,4 @@ public:
         return remainMoney;
     }
     
-    int getPlayerHandCount(){
-        return this->playerHandCards;
-    }
 };
