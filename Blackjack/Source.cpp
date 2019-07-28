@@ -30,6 +30,7 @@ int main() {
 		cout << "Player " << size + 1 << " Please Place Your Bet: ";
 		cin >> playerBets;
 		players[size].getBettingAMount(playerBets);
+        players[size].getRemainingBalance();
 	}
        
 	for (int cards = 0; cards < 2; cards++) {
@@ -39,47 +40,71 @@ int main() {
 	}
 
 	for (int i = 0; i < players.size(); i++) {
-		cout << "--------------------------" << endl;
-		cout << "   Player: " << i + 1 << " | " << "$: " << players[i].getBalance() << endl;
+		cout << "\n-------------------------------" << endl;
+		cout << "Player: " << i + 1 << " | " << "Current Balance: " << players[i].getBalance() << endl;
 		cout << "Current hand: ";
 		players[i].print();
-		cout << "\nTotal: " << players[i].getTotal();
-		cout << "\n--------------------------" << endl;
+		//cout << "\nTotal: " << players[i].getHandTotal();
+		cout << "\n-------------------------------" << endl;
 
 		do {
 			cout << "Player: " << i + 1 << " | Hit(1) OR Stand(2): ";
 			cin >> choice;
 			switch (choice) {
 			case 1:
-				cout << "--------------------------" << endl;
+				cout << "------------------------------------" << endl;
 				cout << "Player: " << i + 1 << endl;
 				players[i].distributeCards();
 				cout << "Current hand: ";
 				players[i].print();
-			//	cout << "\nTotal: " << players[i].getTotal();
-				cout << "\n--------------------------" << endl;
+				cout << "\n-----------------------------------" << endl;
 				break;
 			case 2:
-				players[i].getTotal();
-				if (players[i].getTotal() > 15) {
-					players[i].getWinningMoney();
-				}
-				cout << "\n=====================================================\n";
-				cout << "Player: " << i + 1 << endl;
-				players[i].print();
-				cout << "\nBalance: " <<players[i].getBalance();
-				cout << "\   |   Total Winning $: " << players[i].getBet();
-				cout << "\n=====================================================\n";
-				cout << endl;
+                    players[i].getHandTotal();
+                 cout << "-------------------------------" << endl;
+                    cout << "Player: " << i + 1 <<  " | Current Hand: ";
+                    players[i].print();
+                    cout << "\nTotal Points: " << players[i].getPlayerHandTotal()<<endl;
+                        cout << "-------------------------------" << endl;
+//                if (players[i].getHandTotal() > 15) {
+//                    players[i].getWinningMoney();
+//                }
+//                cout << "\n=====================================================\n";
+//                cout << "Player: " << i + 1 << " | Current Balance: " << players[i].getBalance() << endl;
+//                cout << "Current Hand: ";
+//                players[i].print();
+//                cout << "\nTotal Points: " << players[i].getPlayerHandTotal();
+//                cout << "\n=====================================================\n";
+//                cout << endl;
 				break;
 			}
 		} while (choice != 2);
+    }
+    
+    cout << "\n=====================================================\n";
+    Players dealer(1);
+    cout << "Dealer Hand: ";
+    do{
+        dealer.distributeCards();
+        dealer.getHandTotal();
+    }
+    while(!(dealer.getPlayerHandTotal() >= 17));
+    dealer.print();
+    cout << "\nDealer Total Points: " << dealer.getPlayerHandTotal() ;
+    cout << "\n--------------------------------------------------" << endl;
+    for(int index = 0; index < players.size(); index++){
+        cout << "Player: " << index + 1 << " | Current Balance: " << players[index].getBalance() << endl;
+        cout << "Current Hand: ";
+        players[index].print();
+        cout << " | Player Hand Total: " << players[index].getPlayerHandTotal()<< endl;
+        if(players[index].getPlayerHandTotal()  <= 21 && players[index].getPlayerHandTotal() >= dealer.getPlayerHandTotal() || dealer.getHandTotal() > 21){
+            players[index].getWinningMoney();
+        }
+        cout << "Current Balance: " << players[index].getBalance() << endl;
+          cout << "=============================" <<endl;
+    }
 
-
-	}
- 
-
-    cout << endl;
+ cout << "\n=====================================================\n";
 	system("pause");
 	return 0;
 }
