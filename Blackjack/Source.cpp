@@ -35,34 +35,34 @@ int main() {
 	cout << "=======================" << endl;
 	cout << "DEALER Hand: |#| " << dealer.showOneCard();
 
-	for (int i = 0; i < players.size(); i++) {
+	for (int index = 0; index < players.size(); index++) {
 		cout << "\n-------------------------------" << endl;
-		cout << "Player: " << i + 1 << " | " << "Current Balance: " << players[i].getBalance() << endl;
+		cout << "Player: " << index + 1 << " | " << "Current Balance: " << players[index].getBalance() << endl;
 		cout << "Current hand: ";
-		players[i].print();
+		players[index].print();
 		cout << endl;
 		do {
-			if (players[i].isBlackjack()) {
+			if (players[index].isBlackjack()) {
 				cout << "Blackjack!";
 				choice = 2;
 				break;
 			}
 			else {
-				cout << "Player: " << i + 1 << " | Hit(1) OR Stand(2): ";
+				cout << "Player: " << index + 1 << " | Hit(1) OR Stand(2): ";
 				cin >> choice;
 				switch (choice) {
 				case 1:
 					cout << "------------------------------------" << endl;
-					cout << "Player: " << i + 1 << endl;
-					players[i].distributeCards();
+					cout << "Player: " << index + 1 << endl;
+					players[index].distributeCards();
 					cout << "Current hand: ";
-					players[i].print();
+					players[index].print();
 					cout << "\n-----------------------------------" << endl;
 					break;
 				case 2:
 					cout << "-------------------------------" << endl;
-					cout << "Player: " << i + 1 << " | Current Hand: ";
-					players[i].print();
+					cout << "Player: " << index + 1 << " | Current Hand: ";
+					players[index].print();
 					cout << "\n-------------------------------" << endl;
 					break;
 				}
@@ -71,13 +71,13 @@ int main() {
     }
     
     cout << "\n=====================================================\n";
-    do{
+	do {
 		cout << "DEALER Hand: ";
 		dealer.print();
 		cout << endl;
 		dealer.getHandTotal();;
-        dealer.distributeCards();
-    }
+		dealer.distributeCards();
+	}
     while(!(dealer.getPlayerHandTotal() >= 17));
 
     cout << "\nDEALER Total Points: " << dealer.getPlayerHandTotal() ;
@@ -95,9 +95,6 @@ int main() {
 			cout << endl;
 			players[index].getHandTotal();
 			cout << "\nPlayer Hand Total: " << players[index].getPlayerHandTotal() << endl;
-		/*	if (players[index].getPlayerHandTotal() <= 21 && players[index].getPlayerHandTotal() >= dealer.getPlayerHandTotal() || dealer.getHandTotal() > 21) {
-				players[index].getWinningMoney();
-			}*/
 			if (players[index].getBusting(players[index].getPlayerHandTotal(), dealer.getPlayerHandTotal())) {
 				cout << "Winning Amount : " << players[index].getBet() << endl;
 				players[index].getWinningMoney();
