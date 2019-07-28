@@ -25,8 +25,6 @@ public:
 	virtual void distributeCards() {
 		Deck deck;
 		deck.createDeck();
-		//Dealer card;
-		//hand.push_back(card.distributeCard());
 		hand.push_back(deck.drawCards());
 	}
 
@@ -54,7 +52,7 @@ public:
 
             }
             else{
-                value = 1 ;
+                value = 1;
             }
         }
         return value;
@@ -69,22 +67,41 @@ public:
         playerHandTotal = total;
         return playerHandTotal;
     }
-    
+
+
     int getPlayerHandTotal(){
         return this->playerHandTotal;
     }
+
 	void print() {
 		for (int i = 0; i < hand.size(); i++) {
 			cout << hand[i] << " ";
-            if(getBlackjack(hand[i])==true){
-                cout << "Blackjack" <<endl;
-            }
 		}
 	}
+
+	string showOneCard() {
+		return hand.at(1);
+	}
     
-    bool getBlackjack(string card){
-        return (card == "A" &&(card == "10" || card == "J" ||card == "Q" || card == "K"));
+	bool isBlackjack() {
+		for (int i = 0; i < hand.size(); i++) {
+			for (int j = i + 1; j < hand.size(); j++) {
+				return (getBlackjack(hand[i], hand[j]));
+			}
+		}
+		return false;
+		this->totalMoney += playerBet;
+	}
+
+    bool getBlackjack(string card, string card2) {
+        return (card == "A" && (card2 == "10" || card2 == "J" ||card2 == "Q" ||  card2 == "K")
+			|| card2 == "A" && (card == "10" || card == "J" || card == "Q" || card == "K"));
     }
+
+	bool getBusting(int amount, int dealerAmount) {
+		return ((amount < 21 && amount > dealerAmount) || (amount < 21 && dealerAmount > 21));
+	}
+
 	int getBettingAMount(int amount) {
 		playerBet = amount;
 		return this->playerBet;

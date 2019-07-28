@@ -10,6 +10,7 @@ using namespace std;
 
 class Deck {
 private:
+	//"2","3","4","5","6","7","8","9","10","J","Q",
 	vector<string>cards{ "2","3","4","5","6","7","8","9","10","J","Q","K","A" };
 	vector<string>cardDeck;
 	stack<string>stackOfDeck;
