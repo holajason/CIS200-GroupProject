@@ -12,20 +12,22 @@ private:
 	int totalMoney;
 	int playerBet;
     int playerHandTotal;
+	int size;
 	vector<string>hand;
+	stack<string>cardStack;
 public:
+	Deck deck;
 	Players(int numberOfPlayers)
 	{
+		size = 0;
         playerHandTotal = 0;
 		this->startingAmountOfMoney = 100;
 		this->totalMoney = 100;
 		this->numberOfPlayers = numberOfPlayers;
 	}
 
-	virtual void distributeCards() {
-		Deck deck;
-		deck.createDeck();
-		hand.push_back(deck.drawCards());
+	void distributePlayerCards(string card) {
+		hand.emplace_back(card);
 	}
 
     int getHandValue(string values){
@@ -49,7 +51,6 @@ public:
             cin >> choice;
             if (choice == 'Y' || choice == 'y') {
                 value = 11;
-
             }
             else{
                 value = 1;
@@ -58,6 +59,10 @@ public:
         return value;
     }
     
+	void playAgain() {
+		hand.clear();
+	}
+
     int getHandTotal(){
         int total= 0;
         for(int index = 0; index < hand.size(); index++){
@@ -68,6 +73,13 @@ public:
         return playerHandTotal;
     }
 
+	int getSoftHandTotal() {
+		int total = 0;
+		for (int index = 0; index < hand.size(); index++) {
+			total += getHandValue(hand[index]);
+		}
+		return total;
+	}
 
     int getPlayerHandTotal(){
         return this->playerHandTotal;
@@ -93,21 +105,28 @@ public:
 		this->totalMoney += playerBet;
 	}
 
+
+	bool isBusted(int handTotal) {
+		return (handTotal > 21);
+		this->totalMoney -= playerBet;
+	}
+
     bool getBlackjack(string card, string card2) {
         return (card == "A" && (card2 == "10" || card2 == "J" ||card2 == "Q" ||  card2 == "K")
 			|| card2 == "A" && (card == "10" || card == "J" || card == "Q" || card == "K"));
     }
 
 	bool getBusting(int amount, int dealerAmount) {
-		return ((amount < 21 && amount > dealerAmount) || (amount < 21 && dealerAmount > 21));
+		return ((amount <= 21 && amount >= dealerAmount) || (amount <= 21 && dealerAmount >= 21));
 	}
 
 	int getBettingAMount(int amount) {
+
 		playerBet = amount;
 		return this->playerBet;
 	}
     
-	int getBet() {
+	int getPlayerBets() {
 		return this->playerBet;
 	}
 	int getStartingBalance() {
@@ -122,7 +141,7 @@ public:
         return this->numberOfPlayers;
     }
     
-    int getWinningMoney(){
+    int getWinningAmount(){
 		this->totalMoney += this->playerBet * 2;
 		return totalMoney;
     }
