@@ -23,16 +23,17 @@ int main() {
 		do {
 			for (int index = 0; index < players.size(); index++) {
 				if (players[index].getBalance() <= 0) {
+                    players[index].playAgain();
 					players.erase(players.begin() + index);
 				}
-				else {
+				
 					players[index].playAgain();
 					dealer.playAgain();
 					cout << "Player " << index + 1 << " Please Place Your Bet: ";
 					cin >> playerBets;
 					players[index].getBettingAMount(playerBets);
 					players[index].getRemainingBalance();
-				}
+				
 			}
 			for (int cards = 0; cards < 2; cards++) {
 				for (int index = 0; index < players.size(); index++) {
@@ -52,6 +53,7 @@ int main() {
 			cout << "=======================" << endl;
 			cout << "DEALER Hand: |#| " << dealer.showOneCard();
 			for (int index = 0; index < players.size(); index++) {
+          
 				cout << "\n-------------------------------" << endl;
 				cout << "Player: " << index + 1 << " | " << "Current Balance: " << players[index].getBalance() << endl;
 				cout << "Current hand: ";

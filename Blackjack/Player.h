@@ -112,8 +112,8 @@ public:
 	}
 
     bool getBlackjack(string card, string card2) {
-        return (card == "A" && (card2 == "10" || card2 == "J" ||card2 == "Q" ||  card2 == "K")
-			|| card2 == "A" && (card == "10" || card == "J" || card == "Q" || card == "K"));
+        return ((card == "A" && (card2 == "10" || card2 == "J" ||card2 == "Q" ||  card2 == "K"))
+			|| (card2 == "A" && (card == "10" || card == "J" || card == "Q" || card == "K")));
     }
 
 	bool getBusting(int amount, int dealerAmount) {
