@@ -7,23 +7,17 @@
 class Players : public Dealer {
 private:
 	int numberOfPlayers;
-	int startingAmountOfMoney;
-    int remainMoney;
 	int totalMoney;
 	int playerBet;
     int playerHandTotal;
-	int size;
 	vector<string>hand;
-	stack<string>cardStack;
 public:
-	Deck deck;
 	Players(int numberOfPlayers)
 	{
-		size = 0;
-        playerHandTotal = 0;
-		this->startingAmountOfMoney = 100;
 		this->totalMoney = 100;
-		this->numberOfPlayers = numberOfPlayers;
+		this->playerBet = 0;
+        this->playerHandTotal = 0;
+		getNumberOfPlayers(numberOfPlayers);
 	}
 
 	void distributePlayerCards(string card) {
@@ -63,7 +57,7 @@ public:
 		hand.clear();
 	}
 
-    int getHandTotal(){
+    int getHandTotalValue(){
         int total= 0;
         for(int index = 0; index < hand.size(); index++){
             total+= getAvalue(hand[index]);
@@ -73,26 +67,12 @@ public:
         return playerHandTotal;
     }
 
-	int getSoftHandTotal() {
+	int getSoftHandTotalValue() {
 		int total = 0;
 		for (int index = 0; index < hand.size(); index++) {
 			total += getHandValue(hand[index]);
 		}
 		return total;
-	}
-
-    int getPlayerHandTotal(){
-        return this->playerHandTotal;
-    }
-
-	void print() {
-		for (int i = 0; i < hand.size(); i++) {
-			cout << hand[i] << " ";
-		}
-	}
-
-	string showOneCard() {
-		return hand.at(1);
 	}
     
 	bool isBlackjack() {
@@ -101,26 +81,47 @@ public:
 				return (getBlackjack(hand[i], hand[j]));
 			}
 		}
-		return false;
 		this->totalMoney += playerBet;
 	}
 
-
-	bool isBusted(int handTotal) {
-		return (handTotal > 21);
+	bool isBusted(int playerHandTotal) {
+		return (playerHandTotal > 21);
 		this->totalMoney -= playerBet;
 	}
 
-    bool getBlackjack(string card, string card2) {
-        return ((card == "A" && (card2 == "10" || card2 == "J" ||card2 == "Q" ||  card2 == "K"))
-			|| (card2 == "A" && (card == "10" || card == "J" || card == "Q" || card == "K")));
+    bool getBlackjack(string cardOne, string cardTwo) {
+        return ((cardOne == "A" && (cardTwo == "10" || cardTwo == "J" ||cardTwo == "Q" ||  cardTwo == "K"))
+			|| (cardTwo == "A" && (cardOne == "10" || cardOne == "J" || cardOne == "Q" || cardOne == "K")));
     }
 
-	bool getBusting(int amount, int dealerAmount) {
-		return ((amount <= 21 && amount >= dealerAmount) || (amount <= 21 && dealerAmount > 21));
+	bool getBusted(int playerHandPts, int dealerHandPts) {
+		return ((playerHandPts <= 21 && playerHandPts > dealerHandPts) 
+			|| (playerHandPts <= 21 && dealerHandPts > 21));
 	}
 
-	int getBettingAMount(int amount) {
+	bool equallyHandTotal(int playerHandPts, int dealerHandPts) {
+		return (playerHandPts == dealerHandPts);
+	}
+
+	int getNumberOfPlayers(int numPlayers) {
+		if (numPlayers > 10 || numPlayers < 0) {
+			throw invalid_argument("Invalid Number Of Players(1-10)");
+		}
+		else {
+			this->numberOfPlayers = numPlayers;
+		}
+		return this->numberOfPlayers;
+	}
+
+	string displayOneCard() {
+		return hand.at(1);
+	}
+
+	int getCurrentHandTotal() {
+		return this->playerHandTotal;
+	}
+
+	int getPlayersBets(int amount) {
 		playerBet = amount;
 		return this->playerBet;
 	}
@@ -129,14 +130,15 @@ public:
 		return this->playerBet;
 	}
 
-
 	int getRemainingBalance() {
 		this->totalMoney -= this->playerBet;
 		return this->totalMoney;
 	}
-    int getNumberPlayer() {
-        return this->numberOfPlayers;
-    }
+
+	int getMoneyBack() {
+		this->totalMoney += this->playerBet;
+		return totalMoney;
+	}
     
     int getWinningAmount(){
 		this->totalMoney += this->playerBet * 2;
@@ -144,5 +146,12 @@ public:
     }
 	int getBalance() {
 		return this->totalMoney;
+	}
+
+	friend ostream& operator << (ostream& os, Players& player) {
+		for (int i = 0; i < player.hand.size(); i++) {
+			os << player.hand[i] << " ";
+		}
+		return os;
 	}
 };

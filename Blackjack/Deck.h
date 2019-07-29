@@ -40,7 +40,7 @@ public:
 		cout << "Stack Size: " << stackOfDeck.size()<<endl;
 	}
     
-	void reShuffle() {
+	void reshuffle() {
 		while (!stackOfDeck.empty()) {
 			stackOfDeck.pop();
 		}
