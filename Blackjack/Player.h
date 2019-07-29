@@ -7,14 +7,14 @@
 class Players : public Dealer {
 private:
 	int numberOfPlayers;
-	int totalMoney;
+	int totalBalance;
 	int playerBet;
     int playerHandTotal;
 	vector<string>hand;
 public:
 	Players(int numberOfPlayers)
 	{
-		this->totalMoney = 100;
+		this->totalBalance = 100;
 		this->playerBet = 0;
         this->playerHandTotal = 0;
 		getNumberOfPlayers(numberOfPlayers);
@@ -81,12 +81,12 @@ public:
 				return (getBlackjack(hand[i], hand[j]));
 			}
 		}
-		this->totalMoney += playerBet;
+		this->totalBalance += playerBet;
 	}
 
 	bool isBusted(int playerHandTotal) {
 		return (playerHandTotal > 21);
-		this->totalMoney -= playerBet;
+		this->totalBalance -= playerBet;
 	}
 
     bool getBlackjack(string cardOne, string cardTwo) {
@@ -94,7 +94,7 @@ public:
 			|| (cardTwo == "A" && (cardOne == "10" || cardOne == "J" || cardOne == "Q" || cardOne == "K")));
     }
 
-	bool getBusted(int playerHandPts, int dealerHandPts) {
+	bool playerWins(int playerHandPts, int dealerHandPts) {
 		return ((playerHandPts <= 21 && playerHandPts > dealerHandPts) 
 			|| (playerHandPts <= 21 && dealerHandPts > 21));
 	}
@@ -105,7 +105,7 @@ public:
 
 	int getNumberOfPlayers(int numPlayers) {
 		if (numPlayers > 10 || numPlayers < 0) {
-			throw invalid_argument("Invalid Number Of Players(1-10)");
+			throw invalid_argument("Invalid Number Of Players(0-10)");
 		}
 		else {
 			this->numberOfPlayers = numPlayers;
@@ -121,7 +121,7 @@ public:
 		return this->playerHandTotal;
 	}
 
-	int getPlayersBets(int amount) {
+	int setPlayersBets(int amount) {
 		playerBet = amount;
 		return this->playerBet;
 	}
@@ -131,26 +131,26 @@ public:
 	}
 
 	int getRemainingBalance() {
-		this->totalMoney -= this->playerBet;
-		return this->totalMoney;
+		this->totalBalance -= this->playerBet;
+		return this->totalBalance;
 	}
 
-	int getMoneyBack() {
-		this->totalMoney += this->playerBet;
-		return totalMoney;
+	int getDrawRoundMoney() {
+		this->totalBalance += this->playerBet;
+		return totalBalance;
 	}
     
     int getWinningAmount(){
-		this->totalMoney += this->playerBet * 2;
-		return totalMoney;
+		this->totalBalance += this->playerBet * 2;
+		return totalBalance;
     }
 	int getBalance() {
-		return this->totalMoney;
+		return this->totalBalance;
 	}
 
 	friend ostream& operator << (ostream& os, Players& player) {
-		for (int i = 0; i < player.hand.size(); i++) {
-			os << player.hand[i] << " ";
+		for (int index = 0; index < player.hand.size(); index++) {
+			os << player.hand[index] << " ";
 		}
 		return os;
 	}
