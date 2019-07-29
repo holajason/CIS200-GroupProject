@@ -117,11 +117,10 @@ public:
     }
 
 	bool getBusting(int amount, int dealerAmount) {
-		return ((amount <= 21 && amount >= dealerAmount) || (amount <= 21 && dealerAmount >= 21));
+		return ((amount <= 21 && amount >= dealerAmount) || (amount <= 21 && dealerAmount > 21));
 	}
 
 	int getBettingAMount(int amount) {
-
 		playerBet = amount;
 		return this->playerBet;
 	}
@@ -129,9 +128,7 @@ public:
 	int getPlayerBets() {
 		return this->playerBet;
 	}
-	int getStartingBalance() {
-		return this->startingAmountOfMoney;
-	}
+
 
 	int getRemainingBalance() {
 		this->totalMoney -= this->playerBet;
