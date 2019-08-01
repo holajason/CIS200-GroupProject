@@ -11,7 +11,6 @@ using namespace std;
 
 class Deck {
 private:
-	//"2","3","4","5","6","7","8","9","10","J","Q",
 	vector<string>cards{ "2","3","4","5","6","7","8","9","10","J","Q","K","A" };
 	vector<string>cardDeck;
 
@@ -30,21 +29,16 @@ public:
 	}
 
 	string drawCards() {
-		string card;
-		card = stackOfDeck.top();
+		string card = stackOfDeck.top();
 		stackOfDeck.pop();
 		return card;
 	}
 
-	void print() {
-		cout << "Stack Size: " << stackOfDeck.size()<<endl;
-	}
-    
 	void reshuffle() {
 		while (!stackOfDeck.empty()) {
 			stackOfDeck.pop();
 		}
-		cardDeck.clear();
+		cardDeck.clear(); // Remove remaining cards from the deck
 		createDeck();
 	}
 

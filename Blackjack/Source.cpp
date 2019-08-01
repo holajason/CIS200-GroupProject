@@ -1,6 +1,6 @@
 #include "Deck.h"
 #include "Player.h"
-#include "Dealer.h"
+
 
 int main() {
 	srand(unsigned(time(0)));
@@ -38,7 +38,7 @@ int main() {
 				for (int cards = 0; cards < 2; cards++) {	//Draw 2 cards for each player
 					for (int index = 0; index < players.size(); index++) {
 						card = deck.drawCards();	
-						players[index].distributePlayerCards(card);
+						players[index].distributeCards(card);
 					}
 					if (deck.getNumberOfCards() < 30) {	//reshuffle if less than 30 cards
 						deck.reshuffle();
@@ -47,7 +47,7 @@ int main() {
 
 				for (int i = 0; i < 2; i++) {	//Dealer draw 2 cards
 					card = deck.drawCards();
-					dealer.distributePlayerCards(card);
+					dealer.distributeCards(card);
 				}
 
 				cout << "===================================" << endl;
@@ -73,9 +73,9 @@ int main() {
 								card = deck.drawCards();
 								cout << "===================================" << endl;
 								cout << "Player: " << index + 1 << endl;
-								players[index].distributePlayerCards(card);
+								players[index].distributeCards(card);
 								cout << "Current hand: " << players[index] << endl;
-								if (players[index].isBusted(players[index].getSoftHandTotalValue())) {	//check if busted
+								if (players[index].isBusted(players[index].getHandValue())) {	//check if busted
 									cout << "  *************" << endl;
 									cout << "  *  Busted!  *" << endl;
 									cout << "  *************" << endl;
@@ -97,43 +97,40 @@ int main() {
 				cout << "\n=====================================================\n";
 				do {
 					cout << "DEALER Hand: " << dealer << endl;
-					dealer.getHandTotalValue();;
+					dealer.getHandValue();
 					card = deck.drawCards();
-					dealer.distributePlayerCards(card);
+					dealer.distributeCards(card);
+			
 				} while (!(dealer.getCurrentHandTotal() >= 17));	//draw another card until 17 or more
-				cout << "DEALER Total Points: " << dealer.getCurrentHandTotal();
+				cout << "Dealer Hand Total: " << dealer.getCurrentHandTotal() << endl;
 				for (int index = 0; index < players.size(); index++) {
 					cout << "\n------------------------------------------" << endl;
 					cout << "Player: " << index + 1 << " | Balance: " << players[index].getBalance() << endl;
 					if (players[index].isBlackjack()) {	//blackjack
 						players[index].getWinningAmount();
 						cout << "Current Hand: " << players[index] << endl;
-						cout << "Blackjack!!! Winning Amount: " << players[index].getPlayerBets() << endl;
+						cout << "Blackjack!!! "<< endl;
 					}
 					else {
 						cout << "Current Hand: " << players[index] << endl;
-						players[index].getHandTotalValue();
-						cout << "Player Hand Total: " << players[index].getCurrentHandTotal() << endl;
+						players[index].getHandValue();		
 						//check if player is busted first
 						if (players[index].isBusted(players[index].getCurrentHandTotal())) {	
-							cout << "Player Bets: " << players[index].getPlayerBets() <<
-								" | Total Loses: " << players[index].getPlayerBets() << endl;
+							cout << "Player Bets: " << players[index].getPlayerBets() << endl;
 						}
 						//check if player and dealer have same amount of points, if its, there's no winner
-						else if (players[index].equallyHandTotal(players[index].getCurrentHandTotal(), dealer.getCurrentHandTotal())) {
+						else if (players[index].isEqualHand(players[index].getCurrentHandTotal(), dealer.getCurrentHandTotal())) {
 							cout << "Player Bets: " << players[index].getPlayerBets() << endl;
 							cout << "*** No Winner ***" << endl;
-							players[index].getDrawRoundMoney();
+							players[index].drawRound();
 						}
 						//Players wins, if not busted and have more points than the dealer
 						else if (players[index].playerWins(players[index].getCurrentHandTotal(), dealer.getCurrentHandTotal())) {
-							cout << "Player Bets: " << players[index].getPlayerBets() <<
-								" | Total Winning : " << players[index].getPlayerBets() << endl;
+							cout << "Player Bets: " << players[index].getPlayerBets() << endl;
 							players[index].getWinningAmount();
 						}
 						else {
-							cout << "Player Bets: " << players[index].getPlayerBets() << 
-								" | Total Loses: " << players[index].getPlayerBets() << endl;
+							cout << "Player Bets: " << players[index].getPlayerBets() << endl;
 						}
 					}
 					cout << "Current Balance: " << players[index].getBalance() << endl;
