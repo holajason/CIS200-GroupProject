@@ -60,6 +60,7 @@ public:
 				return (getBlackjack(playerHand[firstCard], playerHand[secondCard]));
 			}
 		}
+        return false;
 		this->playerBalance += playerBet;
 	}
 

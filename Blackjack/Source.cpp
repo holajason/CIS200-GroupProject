@@ -109,28 +109,22 @@ int main() {
 					} while (choice != 2);
 				}
 				cout << "\n=====================================================\n";
-				cout << "Computer Player: " << endl;
-
-
-				bool done = false;
-				do {
+              
+				bool again = false;
+                while (!again){
 					npcPlayer.getHandValue();
-					
-						int computerHand = npcPlayer.getCurrentHandTotal();
-						if (computerPlayer.HitOrStand(computerHand, dealer.displayOneCard()) == true) {
-							card = deck.drawCards();
-							npcPlayer.distributeCards(card);
-							done = false;
-						}
-						else {
-							cout << "NPC Hand: " << npcPlayer << endl;
-							done = true;
-						}
-					
-				} while (!done);
-				cout << "Current Hand Value : " << npcPlayer.getCurrentHandTotal() << endl;
-				
+                    if (computerPlayer.HitOrStand(npcPlayer.getCurrentHandTotal(), dealer.displayOneCard())) {
+                        card = deck.drawCards();
+                        npcPlayer.distributeCards(card);
+                        again = false;
+                    }
+                    else {
+                        cout << "Computer Player Hand: " << npcPlayer << endl;
+                        again = true;
+                    }
 
+				}
+				cout << "Current Hand Value : " << npcPlayer.getCurrentHandTotal() << endl;
 				cout << endl;
 				do {
 					cout << "DEALER Hand: " << dealer << endl;
