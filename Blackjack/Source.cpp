@@ -1,5 +1,6 @@
 #include "Deck.h"
 #include "Player.h"
+#include "NPCPlayer.h"
 
 
 int main() {
@@ -10,8 +11,10 @@ int main() {
 	bool valid = false;
 	string card;
 	Deck deck;
+	NPCPlayer computerPlayer;
 	vector<Players> players;
 	Players dealer(1);
+	Players npcPlayer(1);
 
 	deck.createDeck();
 	while (!valid) {
@@ -28,16 +31,22 @@ int main() {
 						players[index].playAgain(); //Reset player current hand
 						players.erase(players.begin() + index); //Remove player
 					}
+					if (players.size() == 0) {
+						cout << "Not Enought Players. " << endl;
+						return 0;
+					}
 					players[index].playAgain(); // reset player hand
 					dealer.playAgain();			//reset dealer hand
+					npcPlayer.playAgain();
 					cout << "Player " << index + 1 << " Please Place Your Bet: ";
 					cin >> playerBets;
 					players[index].setPlayersBets(playerBets);	//get player bets
 					players[index].getRemainingBalance();
 				}
+			
 				for (int cards = 0; cards < 2; cards++) {	//Draw 2 cards for each player
 					for (int index = 0; index < players.size(); index++) {
-						card = deck.drawCards();	
+						card = deck.drawCards();
 						players[index].distributeCards(card);
 					}
 					if (deck.getNumberOfCards() < 30) {	//reshuffle if less than 30 cards
@@ -48,6 +57,11 @@ int main() {
 				for (int i = 0; i < 2; i++) {	//Dealer draw 2 cards
 					card = deck.drawCards();
 					dealer.distributeCards(card);
+
+				}
+				for (int i = 0; i < 2; i++) {
+					card = deck.drawCards();
+					npcPlayer.distributeCards(card);	 //Computer player
 				}
 
 				cout << "===================================" << endl;
@@ -95,6 +109,29 @@ int main() {
 					} while (choice != 2);
 				}
 				cout << "\n=====================================================\n";
+				cout << "Computer Player: " << endl;
+
+
+				bool done = false;
+				do {
+					npcPlayer.getHandValue();
+					
+						int computerHand = npcPlayer.getCurrentHandTotal();
+						if (computerPlayer.HitOrStand(computerHand, dealer.displayOneCard()) == true) {
+							card = deck.drawCards();
+							npcPlayer.distributeCards(card);
+							done = false;
+						}
+						else {
+							cout << "NPC Hand: " << npcPlayer << endl;
+							done = true;
+						}
+					
+				} while (!done);
+				cout << "Current Hand Value : " << npcPlayer.getCurrentHandTotal() << endl;
+				
+
+				cout << endl;
 				do {
 					cout << "DEALER Hand: " << dealer << endl;
 					dealer.getHandValue();
@@ -103,6 +140,9 @@ int main() {
 			
 				} while (!(dealer.getCurrentHandTotal() >= 17));	//draw another card until 17 or more
 				cout << "Dealer Hand Total: " << dealer.getCurrentHandTotal() << endl;
+
+
+
 				for (int index = 0; index < players.size(); index++) {
 					cout << "\n------------------------------------------" << endl;
 					cout << "Player: " << index + 1 << " | Balance: " << players[index].getBalance() << endl;
