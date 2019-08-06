@@ -9,6 +9,9 @@ public:
 		Players::setPlayersBets(1);
 	}
 
+	void setPlayersBets(int amount) {
+		playerBet = amount;
+	}
 
 	bool HitOrStand(int currentHandTotal, string dealerFaceUpCard) {
 		if (currentHandTotal >= 17) {
@@ -24,7 +27,6 @@ public:
 			(currentHandTotal >= 12 && dealerFaceUpCard == "6")) {
 			return false;
 		}
-
 		return true;
 	}
 

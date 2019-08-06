@@ -7,9 +7,10 @@ class Players {
 private:
 	int numberOfPlayers;
 	int playerBalance;
-	int playerBet;
     int playerHandTotal;
 	vector<string>playerHand;
+protected:
+	int playerBet;
 public:
 	Players(int numberOfPlayers){
 		this->playerBalance = 100;
@@ -55,12 +56,7 @@ public:
     }
     
 	bool isBlackjack() {
-		for (int firstCard = 0;  firstCard < playerHand.size(); firstCard++) {
-			for (int secondCard = firstCard + 1; secondCard < playerHand.size(); secondCard++) {
-				return (getBlackjack(playerHand[firstCard], playerHand[secondCard]));
-			}
-		}
-        return false;
+		return (getBlackjack(playerHand[0], playerHand[1]));
 		this->playerBalance += playerBet;
 	}
 
