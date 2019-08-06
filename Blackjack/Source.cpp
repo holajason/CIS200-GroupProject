@@ -12,9 +12,9 @@ int main() {
 	string card;
 	Deck deck;
 	NPCPlayer computerPlayer;
-	vector<Players> players;
-	Players dealer(1);
-	Players npcPlayer(1);
+	vector<Player> players;
+	Player dealer(1);
+	Player npcPlayer(1);
 
 	deck.createDeck();
 	while (!valid) {

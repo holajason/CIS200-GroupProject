@@ -1,12 +1,12 @@
 #pragma once
 #include "Player.h"
-class NPCPlayer : public Players {
+class NPCPlayer : public Player {
 private:
 	int currentHandValue;
 	string cardTwo = "2";
 public:
-	NPCPlayer() : Players(1) {
-		Players::setPlayersBets(1);
+	NPCPlayer() : Player(1) {
+		Player::setPlayersBets(1);
 	}
 
 	void setPlayersBets(int amount) {

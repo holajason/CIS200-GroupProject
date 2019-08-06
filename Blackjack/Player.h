@@ -3,7 +3,7 @@
 #include "Deck.h"
 
 
-class Players {
+class Player {
 private:
 	int numberOfPlayers;
 	int playerBalance;
@@ -12,7 +12,7 @@ private:
 protected:
 	int playerBet;
 public:
-	Players(int numberOfPlayers){
+	Player(int numberOfPlayers){
 		this->playerBalance = 100;
 		this->playerBet = 0;
         this->playerHandTotal = 0;
@@ -117,7 +117,7 @@ public:
 		playerHand.clear();
 	}
 
-	friend ostream& operator << (ostream& os, Players& player) {
+	friend ostream& operator << (ostream& os, Player& player) {
 		for (int index = 0; index < player.playerHand.size(); index++) {
 			os << player.playerHand[index] << " ";
 		}
