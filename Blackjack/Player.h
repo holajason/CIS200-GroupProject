@@ -41,8 +41,13 @@ public:
         }
         //Needs to be modify
 		else if(card == "A") {
+            if(this->getCurrentHandTotal() >=21){
+                cardValue = 1;
+            }
+            else{
 			cardValue = 11;
 		}
+        }
         return cardValue;
     }
     

@@ -161,9 +161,11 @@ int main() {
 							players[index].getWinningAmount();
 						}
 						else {
+                           
 							cout << "Player Bets: " << players[index].getPlayerBets() << endl;
 						}
 					}
+                     cout << "Player Hand Total: " << players[index].getCurrentHandTotal() <<endl;
 					cout << "Current Balance: " << players[index].getBalance() << endl;
 				}
 				cout << "\n=====================================================\n";
