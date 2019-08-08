@@ -48,29 +48,27 @@ public:
             cardValue = 10;
         }
 
-		else if(card == "A")
-		{
-            if(this->getCurrentHandTotal() >= 11)
-			{
-                cardValue = 1;
-            }
-            else
-			{
-			cardValue = 11;
-			}
-        }
         return cardValue;
     }
     
     int getHandValue()
 	{
         int total= 0;
-		for (int index = 0; index < playerHand.size(); index++)
+        for(int index = 0; index < playerHand.size(); index++)
 		{
-
-
-			return playerHandTotal += this->getCardValue(playerHand[index]);
-		}
+			total += this->getCardValue(playerHand[index]);
+			if (playerHand[index] == "A") {
+				if (total >= 11) {
+					total += 1;
+				}
+				else {
+					total += 11;
+				}
+			}
+           
+        }
+        playerHandTotal = total;
+        return playerHandTotal;
     }
     
 	bool isBlackjack() {
