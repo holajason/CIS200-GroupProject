@@ -17,6 +17,8 @@ int main() {
 	Players npcPlayer(1);
 
 	deck.createDeck();
+	deck.print();
+	/*
 	while (!valid) {
 		try
 		{
@@ -231,7 +233,7 @@ int main() {
 		}
 	}
 
-
+	*/
 	system("pause");
 	return 0;
 }
