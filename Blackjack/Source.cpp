@@ -135,8 +135,6 @@ int main() {
 					{
                         card = deck.drawCards();
                         npcPlayer.distributeCards(card);
-						npcPlayer.setPlayersBets(1);
-						npcPlayer.getRemainingBalance();
                         again = false;
                     }
                     else 
@@ -144,6 +142,9 @@ int main() {
                         cout << "Computer Player Hand: " << npcPlayer << endl;
                         again = true;
                     }
+
+					npcPlayer.setPlayersBets(1);
+					npcPlayer.getRemainingBalance();
 
 				}
 				cout << "Current Hand Value : " << npcPlayer.getCurrentHandTotal() << endl;
