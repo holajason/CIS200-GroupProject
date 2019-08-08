@@ -135,6 +135,8 @@ int main() {
 					{
                         card = deck.drawCards();
                         npcPlayer.distributeCards(card);
+						npcPlayer.setPlayersBets(1);
+						npcPlayer.getRemainingBalance();
                         again = false;
                     }
                     else 
@@ -146,6 +148,7 @@ int main() {
 				}
 				cout << "Current Hand Value : " << npcPlayer.getCurrentHandTotal() << endl;
 				cout << endl;
+
 				do
 				{
 					cout << "DEALER Hand: " << dealer << endl;
@@ -175,13 +178,13 @@ int main() {
 						cout << "Current Hand: " << players[index] << endl;
 						players[index].getHandValue();		
 
-						//check if player is busted first
+						//check if player has busted first
 						if (players[index].isBusted(players[index].getCurrentHandTotal())) 
 						{	
 							cout << "Player Bets: " << players[index].getPlayerBets() << endl;
 						}
 
-						//check if player and dealer have same amount of points, if its, there's no winner
+						//check if player and dealer have same amount of points, if so, there's no winner
 						else if (players[index].isEqualHand(players[index].getCurrentHandTotal(), dealer.getCurrentHandTotal()))
 						{
 							cout << "Player Bets: " << players[index].getPlayerBets() << endl;
@@ -202,7 +205,7 @@ int main() {
 						}
 					}
 
-                     cout << "Player Hand Total: " << players[index].getCurrentHandTotal() <<endl;
+                    cout << "Player Hand Total: " << players[index].getCurrentHandTotal() <<endl;
 					cout << "Current Balance: " << players[index].getBalance() << endl;
 				}
 
