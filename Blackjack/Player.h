@@ -47,7 +47,6 @@ public:
         else if(card == "10" || card == "J" || card == "Q" || card == "K"){
             cardValue = 10;
         }
-
         return cardValue;
     }
     
@@ -56,17 +55,17 @@ public:
         int total= 0;
         for(int index = 0; index < playerHand.size(); index++)
 		{
-			total += this->getCardValue(playerHand[index]);
-			if (playerHand[index] == "A") {
-				if (total >= 11) {
-					total += 1;
-				}
-				else {
-					total += 11;
-				}
-			}
-           
+            if (playerHand[index] == "A") {
+                if (total >= 11) {
+                    total += 1;
+                }
+                else {
+                    total += 11;
+                }
+            }
+            total += this->getCardValue(playerHand[index]);
         }
+        
         playerHandTotal = total;
         return playerHandTotal;
     }
