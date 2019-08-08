@@ -1,17 +1,14 @@
 #pragma once
 #include "Player.h"
-class NPCPlayer : public Player {
+class NPCPlayer : public Players {
 private:
 	int currentHandValue;
 	string cardTwo = "2";
 public:
-	NPCPlayer() : Player(1) {
-		Player::setPlayersBets(1);
+	NPCPlayer() : Players(1) {
+		Players::setPlayersBets(1);
 	}
 
-	void setPlayersBets(int amount) {
-		playerBet = amount;
-	}
 
 	bool HitOrStand(int currentHandTotal, string dealerFaceUpCard) {
 		if (currentHandTotal >= 17) {
@@ -27,6 +24,7 @@ public:
 			(currentHandTotal >= 12 && dealerFaceUpCard == "6")) {
 			return false;
 		}
+
 		return true;
 	}
 
