@@ -3,16 +3,15 @@
 #include "Deck.h"
 
 
-class Player {
+class Players {
 private:
 	int numberOfPlayers;
 	int playerBalance;
+	int playerBet;
     int playerHandTotal;
 	vector<string>playerHand;
-protected:
-	int playerBet;
 public:
-	Player(int numberOfPlayers){
+	Players(int numberOfPlayers){
 		this->playerBalance = 100;
 		this->playerBet = 0;
         this->playerHandTotal = 0;
@@ -40,6 +39,7 @@ public:
         else if(card == "10" || card == "J" || card == "Q" || card == "K"){
             cardValue = 10;
         }
+        //Needs to be modify
 		else if(card == "A") {
 			cardValue = 11;
 		}
@@ -56,7 +56,12 @@ public:
     }
     
 	bool isBlackjack() {
-		return (getBlackjack(playerHand[0], playerHand[1]));
+		for (int firstCard = 0;  firstCard < playerHand.size(); firstCard++) {
+			for (int secondCard = firstCard + 1; secondCard < playerHand.size(); secondCard++) {
+				return (getBlackjack(playerHand[firstCard], playerHand[secondCard]));
+			}
+		}
+        return false;
 		this->playerBalance += playerBet;
 	}
 
@@ -117,7 +122,7 @@ public:
 		playerHand.clear();
 	}
 
-	friend ostream& operator << (ostream& os, Player& player) {
+	friend ostream& operator << (ostream& os, Players& player) {
 		for (int index = 0; index < player.playerHand.size(); index++) {
 			os << player.playerHand[index] << " ";
 		}

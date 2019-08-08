@@ -12,9 +12,9 @@ int main() {
 	string card;
 	Deck deck;
 	NPCPlayer computerPlayer;
-	vector<Player> players;
-	Player dealer(1);
-	Player npcPlayer(1);
+	vector<Players> players;
+	Players dealer(1);
+	Players npcPlayer(1);
 
 	deck.createDeck();
 	while (!valid) {
@@ -49,20 +49,17 @@ int main() {
 						card = deck.drawCards();
 						players[index].distributeCards(card);
 					}
+                    card = deck.drawCards();
+                    dealer.distributeCards(card);
+
+                    card = deck.drawCards();
+                    npcPlayer.distributeCards(card);     //Computer player
 					if (deck.getNumberOfCards() < 30) {	//reshuffle if less than 30 cards
 						deck.reshuffle();
 					}
 				}
 
-				for (int i = 0; i < 2; i++) {	//Dealer draw 2 cards
-					card = deck.drawCards();
-					dealer.distributeCards(card);
-
-				}
-				for (int i = 0; i < 2; i++) {
-					card = deck.drawCards();
-					npcPlayer.distributeCards(card);	 //Computer player
-				}
+			
 
 				cout << "===================================" << endl;
 				cout << "DEALER Hand: |#| " << dealer.displayOneCard();	//One card face down, one card face up
