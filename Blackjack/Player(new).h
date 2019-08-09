@@ -4,48 +4,56 @@
 class Player
 {
 private:
-
 	vector<string> hand;
 	int playerBalance;
 	int playerBet;
 	int playerHandTotal;
-	bool busted;
-	bool blackJack;
-	bool standing;
+    busted = false;
+    blackJack = false;
+    standing = false;
 
-	void updatePlayerHandTotal()
-	{
-		playerHandTotal = 0;
-		for (int index = 0; index < hand.size(); index++)
-		{
-			if (hand.at(index) == "Q" || hand.at(index) == "K" || hand.at(index) == "J")
-				playerHandTotal += 10;
-			else if (hand.at(index) == "A")
-				playerHandTotal += 11;
-			else
-			{
-				int card = stoi(hand.at(index));
-				playerHandTotal += card;
-			}
-		}
-	}
+    int getCardValue(string card){
+        int cardValue = 0;
+         if(card == "J" || card == "Q" || card == "K"){
+            cardValue = 10;
+        }
+         else{
+             cardValue = stoi(card);
+         }
+        return cardValue;
+    }
+    
+    int updatePlayerTotal(){
+        int currPts = 0;
+        for(int index = 0; index < hand.size(); index++){
+            currPts += this->getCardValue(hand[index]);
+        }
+        for(int index = 0; index < hand.size(); index++){
+            if(hand[index] == "A"){
+                if(currPts >= 11){
+                    currPts +=1;
+                }
+                else{
+                    currPts += 11;
+                }
+            }
+        }
+        playerHandTotal = currPts;
+        return pslayerHandTotal;
+    }
+    
 
 public:
-
 	Player()
 	{
 		this->playerBalance = 100;
 		this->playerBet = 0;
 		this->playerHandTotal = 0;
-		busted = false;
-		blackJack = false;
-		standing = false;
 	}
 
 	void playerStatus()
 	{
-		this->updatePlayerHandTotal();
-
+        this->updatePlayerTotal();
 		if (playerHandTotal > 21)
 		{
 			busted = true;
