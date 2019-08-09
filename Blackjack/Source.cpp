@@ -1,7 +1,7 @@
 #include "Deck.h"
 #include "Player.h"
 #include "NPCPlayer.h"
-
+/*
 
 int main() {
 	srand(unsigned(time(0)));
@@ -230,3 +230,5 @@ int main() {
 	system("pause");
 	return 0;
 }
+
+*/

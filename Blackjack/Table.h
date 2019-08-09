@@ -32,20 +32,24 @@ public:
 
 	int getPlayerBalance(int playerIndex)
 	{
+        int balance = 0;
 		for (int index = 0; index < players.size(); ++index)
 		{
 			if (playerIndex == index)
-				return players.at(index).getPlayerBalance();
+				balance = players.at(index).getPlayerBalance();
 		}
+        return balance;
 	}
 
 	vector<string> getPlayerHand(int playerIndex) const
 	{
+        int total;
 		for (int index = 0; index < players.size(); ++index)
 		{
 			if (playerIndex == index)
-				return players.at(index).getPlayerHand();
+				total = players.at(index).getPlayerHand());
 		}
+        return temp;
 	}
 
 	void setPlayerBets(int wager)
@@ -84,11 +88,10 @@ public:
 			if (playerIndex == index)
 			{
 				if (players.at(index).isBusted() || players.at(index).hasBlackJack() || players.at(index).isStanding())
-					return false;
-				else
-					return true;
+                    return false;
 			}
 		}
+        return true;
 	}
 	void playerTurn(int playerIndex, bool hit)
 	{
