@@ -57,13 +57,12 @@ int main() {
 						card = deck.drawCards();
 						players[index].distributeCards(card);
 					}
-
+					//dealer 
                     card = deck.drawCards();
                     dealer.distributeCards(card);
-
+					//Computer player
                     card = deck.drawCards();
-                    npcPlayer.distributeCards(card);     //Computer player
-
+                    npcPlayer.distributeCards(card);    
 					if (deck.getNumberOfCards() < 30)   //reshuffle if less than 30 cards
 					{	
 						deck.reshuffle();
@@ -103,7 +102,7 @@ int main() {
 								cout << "Player: " << index + 1 << endl;
 								players[index].distributeCards(card);
 								cout << "Current hand: " << players[index] << endl;
-								if (players[index].isBusted(players[index].getHandValue())) //check if busted
+								if (players[index].isBusted(players[index].playerCurrentHandValue())) //check if busted
 								{	
 									cout << "  *************" << endl;
 									cout << "  *  Busted!  *" << endl;
@@ -130,8 +129,8 @@ int main() {
 
                 while (!again)
 				{
-					npcPlayer.getHandValue();
-                    if (computerPlayer.HitOrStand(npcPlayer.getCurrentHandTotal(), dealer.displayOneCard()))
+					npcPlayer.playerCurrentHandValue();
+                    if (computerPlayer.HitOrStand(npcPlayer.getPlayerHandTotal(), dealer.displayOneCard()))
 					{
                         card = deck.drawCards();
                         npcPlayer.distributeCards(card);
@@ -147,19 +146,19 @@ int main() {
 					npcPlayer.getRemainingBalance();
 
 				}
-				cout << "Current Hand Value : " << npcPlayer.getCurrentHandTotal() << endl;
+				cout << "Current Hand Value : " << npcPlayer.getPlayerHandTotal() << endl;
 				cout << endl;
 
 				do
 				{
 					cout << "DEALER Hand: " << dealer << endl;
-					dealer.getHandValue();
+					dealer.playerCurrentHandValue();
 					card = deck.drawCards();
 					dealer.distributeCards(card);
 			
-				} while (!(dealer.getCurrentHandTotal() >= 17));	//draw another card until 17 or more
+				} while (!(dealer.getPlayerHandTotal() >= 17));	//draw another card until 17 or more
 
-				cout << "Dealer Hand Total: " << dealer.getCurrentHandTotal() << endl;
+				cout << "Dealer Hand Total: " << dealer.getPlayerHandTotal() << endl;
 
 
 
@@ -177,16 +176,16 @@ int main() {
 					else 
 					{
 						cout << "Current Hand: " << players[index] << endl;
-						players[index].getHandValue();		
+						players[index].playerCurrentHandValue();		
 
 						//check if player has busted first
-						if (players[index].isBusted(players[index].getCurrentHandTotal())) 
+						if (players[index].isBusted(players[index].getPlayerHandTotal())) 
 						{	
 							cout << "Player Bets: " << players[index].getPlayerBets() << endl;
 						}
 
 						//check if player and dealer have same amount of points, if so, there's no winner
-						else if (players[index].isEqualHand(players[index].getCurrentHandTotal(), dealer.getCurrentHandTotal()))
+						else if (players[index].isEqualHand(players[index].getPlayerHandTotal(), dealer.getPlayerHandTotal()))
 						{
 							cout << "Player Bets: " << players[index].getPlayerBets() << endl;
 							cout << "*** No Winner ***" << endl;
@@ -194,7 +193,7 @@ int main() {
 						}
 
 						//Players wins, if not busted and have more points than the dealer
-						else if (players[index].playerWins(players[index].getCurrentHandTotal(), dealer.getCurrentHandTotal()))
+						else if (players[index].playerWins(players[index].getPlayerHandTotal(), dealer.getPlayerHandTotal()))
 						{
 							cout << "Player Bets: " << players[index].getPlayerBets() << endl;
 							players[index].getWinningAmount();
@@ -206,7 +205,7 @@ int main() {
 						}
 					}
 
-                    cout << "Player Hand Total: " << players[index].getCurrentHandTotal() <<endl;
+                    cout << "Player Hand Total: " << players[index].getPlayerHandTotal() <<endl;
 					cout << "Current Balance: " << players[index].getBalance() << endl;
 				}
 

@@ -16,7 +16,7 @@ public:
 		this->playerBalance = 100;
 		this->playerBet = 0;
         this->playerHandTotal = 0;
-		this->numberOfPlayers = getNumberOfPlayers(numberOfPlayers);
+		this->numberOfPlayers = this->getNumberOfPlayers(numberOfPlayers);
 	}
 
 	int getNumberOfPlayers(int numPlayers) 
@@ -54,7 +54,7 @@ public:
 
 	//Pre: Function that will track the player hand total after receiving a card from the dealer
 	//Pos: Function that tracks the current hand-value of the player
-    int getHandValue()
+    int playerCurrentHandValue()
 	{
         int currentPts= 0;
 		//First iteration that will only add all cards value except A's
@@ -105,7 +105,8 @@ public:
 	//Pos: Player wins by not busted and have more points than the dealer
 	bool playerWins(int playerHandPts, int dealerHandPts) 
 	{
-		return ((playerHandPts <= 21 && playerHandPts > dealerHandPts)  || (playerHandPts <= 21 && dealerHandPts > 21));
+		return ((playerHandPts <= 21 && playerHandPts > dealerHandPts) ||
+			(playerHandPts <= 21 && dealerHandPts > 21));
 	}
 
 	//Pre: Will check if both player and dealer have same amount of points
@@ -122,7 +123,7 @@ public:
 		return playerHand.at(1);
 	}
 
-	int getCurrentHandTotal()
+	int getPlayerHandTotal()
 	{
 		return this->playerHandTotal;
 	}
