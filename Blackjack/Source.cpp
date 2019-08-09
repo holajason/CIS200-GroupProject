@@ -29,6 +29,7 @@ int main() {
 			}
 			do 
 			{
+				//If play again, remove any player with insufficient fund
 				for (int index = 0; index < players.size(); index++) 
 				{
 					if (players[index].getBalance() <= 0) {
@@ -40,7 +41,7 @@ int main() {
 						return 0;
 					}
 				}
-
+				//After resizing the collection of players, reset and start again
 				for (int index = 0; index < players.size(); index++) {
 					players[index].playAgain(); // reset player hand
 					dealer.playAgain();			//reset dealer hand
