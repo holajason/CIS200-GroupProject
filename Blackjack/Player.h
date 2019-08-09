@@ -7,118 +7,168 @@ class Player {
 private:
 	int numberOfPlayers;
 	int playerBalance;
+	int playerBet;
     int playerHandTotal;
 	vector<string>playerHand;
-protected:
-	int playerBet;
 public:
-	Player(int numberOfPlayers){
+	Player(int numberOfPlayers)
+	{
 		this->playerBalance = 100;
 		this->playerBet = 0;
         this->playerHandTotal = 0;
-		this->numberOfPlayers = getNumberOfPlayers(numberOfPlayers);
+		this->numberOfPlayers = this->getNumberOfPlayers(numberOfPlayers);
 	}
 
-	int getNumberOfPlayers(int numPlayers) {
-		if (numPlayers < 0 || numPlayers > 10) {
+	int getNumberOfPlayers(int numPlayers) 
+	{
+		if (numPlayers < 0 || numPlayers > 10) 
+		{
 			throw invalid_argument("Invalid Number Of Players(0-10)");
 		}
 		return numPlayers;
 	}
 
-	void distributeCards(string card) {
+	//Pre: Function that will hand pthe player a card
+	//Pos: Hand a card to the player
+	void distributeCards(string card)
+	{
 		playerHand.emplace_back(card);
 	}
 
-    int getCardValue(string card){
+	//Pre: Function that will return a card value
+	//Pos: Return card value
+    int getCardValue(string card)
+	{
         int cardValue = 0;
         if(card == "2" || card == "3" || card == "4" ||
            card == "5" || card == "6" || card == "7" ||
-           card == "8" || card == "9"){
+           card == "8" || card == "9")
+		{
            cardValue = stoi(card);
         }
         else if(card == "10" || card == "J" || card == "Q" || card == "K"){
             cardValue = 10;
         }
-		else if(card == "A") {
-			cardValue = 11;
-		}
         return cardValue;
     }
-    
-    int getHandValue(){
-        int total= 0;
-        for(int index = 0; index < playerHand.size(); index++){
-            total += this->getCardValue(playerHand[index]);
+
+	//Pre: Function that will track the player hand total after receiving a card from the dealer
+	//Pos: Function that tracks the current hand-value of the player
+    int playerCurrentHandValue()
+	{
+        int currentPts= 0;
+		//First iteration that will only add all cards value except A's
+        for(int index = 0; index < playerHand.size(); index++)
+		{
+            currentPts += this->getCardValue(playerHand[index]);
         }
-        playerHandTotal = total;
+		//2nd iteration that only add A's value
+		for (int index = 0; index < playerHand.size(); index++)
+		{
+			if (playerHand[index] == "A") {
+				if (currentPts >= 11) {
+					currentPts += 1;
+				}
+				else {
+					currentPts += 11;
+				}
+			}
+		}
+        playerHandTotal = currentPts;
         return playerHandTotal;
     }
     
+	//Pre: If the player first two cards is A and a 10 pts card, player will wins automatically
+	//Pos: Player wins if the first two cards are A and a 10 pts card (10, J, Q, K)
 	bool isBlackjack() {
 		return (getBlackjack(playerHand[0], playerHand[1]));
 		this->playerBalance += playerBet;
 	}
 
-	bool isBusted(int playerHandTotal) {
+	//Pre: Player will lose if total points more than 21
+	//Pos: Player lose when total point exceeed 21
+	bool isBusted(int playerHandTotal)
+	{
 		return (playerHandTotal > 21);
 		this->playerBalance -= playerBet;
 	}
 
-    bool getBlackjack(string cardOne, string cardTwo) {
+	//Pre: Helper function that check the first two cards
+	//Pos: Check first two cards
+    bool getBlackjack(string cardOne, string cardTwo)
+	{
         return ((cardOne == "A" && (cardTwo == "10" || cardTwo == "J" ||cardTwo == "Q" ||  cardTwo == "K"))
 			|| (cardTwo == "A" && (cardOne == "10" || cardOne == "J" || cardOne == "Q" || cardOne == "K")));
     }
 
-	bool playerWins(int playerHandPts, int dealerHandPts) {
-		return ((playerHandPts <= 21 && playerHandPts > dealerHandPts) 
-			|| (playerHandPts <= 21 && dealerHandPts > 21));
+	//Pre: Player wins if total point are less than 21 and greater than dealer's hand
+	//Pos: Player wins by not busted and have more points than the dealer
+	bool playerWins(int playerHandPts, int dealerHandPts) 
+	{
+		return ((playerHandPts <= 21 && playerHandPts > dealerHandPts) ||
+			(playerHandPts <= 21 && dealerHandPts > 21));
 	}
 
-	bool isEqualHand(int playerHandPts, int dealerHandPts) {
+	//Pre: Will check if both player and dealer have same amount of points
+	//Pos: Draw round when dealer and player have same amount of points
+	bool isEqualHand(int playerHandPts, int dealerHandPts)
+	{
 		return (playerHandPts == dealerHandPts);
 	}
 
-	string displayOneCard() {
+	//Pre: Will display one card
+	//Pos: Dealer showing one card up
+	string displayOneCard() 
+	{
 		return playerHand.at(1);
 	}
 
-	int getCurrentHandTotal() {
+	int getPlayerHandTotal()
+	{
 		return this->playerHandTotal;
 	}
 
-	void setPlayersBets(int amount) {
+	void setPlayersBets(int amount)
+	{
 		playerBet = amount;
 	}
     
-	int getPlayerBets() {
+	int getPlayerBets()
+	{
 		return this->playerBet;
 	}
 
-	int getRemainingBalance() {
+	int getRemainingBalance() 
+	{
 		this->playerBalance -= this->playerBet;
 		return this->playerBalance;
 	}
 
-	int drawRound() {
+	int drawRound()
+	{
 		this->playerBalance += this->playerBet;
 		return playerBalance;
 	}
     
-    int getWinningAmount(){
+    int getWinningAmount()
+	{
 		this->playerBalance += this->playerBet * 2;
 		return playerBalance;
     }
-	int getBalance() {
+	int getBalance() 
+	{
 		return this->playerBalance;
 	}
 
-	void playAgain() {
+	void playAgain()
+	{
 		playerHand.clear();
 	}
 
-	friend ostream& operator << (ostream& os, Player& player) {
-		for (int index = 0; index < player.playerHand.size(); index++) {
+	friend ostream& operator << (ostream& os, Player& player) 
+	{
+		for (int index = 0; index < player.playerHand.size(); index++) 
+		{
 			os << player.playerHand[index] << " ";
 		}
 		return os;

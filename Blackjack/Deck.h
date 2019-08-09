@@ -13,36 +13,47 @@ class Deck {
 private:
 	vector<string>cards{ "2","3","4","5","6","7","8","9","10","J","Q","K","A" };
 	vector<string>cardDeck;
-
-public:
 	stack<string>stackOfDeck;
-	void createDeck() {
-		for (int set = 0; set < 24; set++) {
-			for (int counts = 0; counts < cards.size(); counts++) {
-				cardDeck.push_back(cards[counts]);
-			}
+public:
+	//Pre: Will combine six decks of card into one and shuffle the deck before loading it to the stack of cards
+	//Pos: Create a stack of cards, shuffle the deck and load to the stack
+	void createDeck()
+	{
+		for (int set = 0; set < 24; set++)
+		{
+			//https://codereview.stackexchange.com/questions/167680/merge-sort-implementation-with-vectors
+			copy(cards.begin(), cards.end(), back_inserter(cardDeck));
 		}
 		random_shuffle(cardDeck.begin(), cardDeck.end());
-		for (int index = 0; index < cardDeck.size(); index++) {
+		for (int index = 0; index < cardDeck.size(); index++) 
+		{
 			stackOfDeck.push(cardDeck[index]);
 		}
 	}
 
-	string drawCards() {
+	//Pre: Method that will draw a card from the top of the stack
+	//Pos: Drawing a card
+	string drawCards()
+	{
 		string card = stackOfDeck.top();
 		stackOfDeck.pop();
 		return card;
 	}
 
-	void reshuffle() {
-		while (!stackOfDeck.empty()) {
+	//Pre: A method that will remove the remaining cards and create a new stack of card
+	//Pos: Remove remaining cards and create a new stack of card
+	void reshuffle()
+	{
+		while (!stackOfDeck.empty()) 
+		{
 			stackOfDeck.pop();
 		}
 		cardDeck.clear(); // Remove remaining cards from the deck
 		createDeck();
 	}
 
-	int getNumberOfCards() {
+	int getNumberOfCards() 
+	{
 		return this->stackOfDeck.size();
 	}
 
