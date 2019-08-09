@@ -13,12 +13,10 @@ class Deck {
 private:
 	vector<string>cards{ "2","3","4","5","6","7","8","9","10","J","Q","K","A" };
 	vector<string>cardDeck;
-
-public:
 	stack<string>stackOfDeck;
-	//Pre: A method that will generate six decks of cards and shuffle the deck before loading
-	// it to the stack of cards
-	//Pos: Create a stack of cards
+public:
+	//Pre: Will combine six decks of card into one and shuffle the deck before loading it to the stack of cards
+	//Pos: Create a stack of cards, shuffle the deck and load to the stack
 	void createDeck()
 	{
 		for (int set = 0; set < 24; set++)
@@ -27,19 +25,12 @@ public:
 			copy(cards.begin(), cards.end(), back_inserter(cardDeck));
 		}
 		random_shuffle(cardDeck.begin(), cardDeck.end());
-	/*	for (int index = 0; index < cardDeck.size(); index++) 
+		for (int index = 0; index < cardDeck.size(); index++) 
 		{
 			stackOfDeck.push(cardDeck[index]);
-		}*/
-		copy(cardDeck.begin(), cardDeck.end(), back_inserter(stackOfDeck));
-	}
-
-	void print() {
-		for (int index = 0; index < cardDeck.size(); index++)
-		{
-			cout << cardDeck[index] << " ";
 		}
 	}
+
 	//Pre: Method that will draw a card from the top of the stack
 	//Pos: Drawing a card
 	string drawCards()
@@ -49,8 +40,8 @@ public:
 		return card;
 	}
 
-	//Pre: A method that will create a new stack of card if there are less than 30 cards
-	//Pos: Create a new stack of card when less than 30 cards remaining
+	//Pre: A method that will remove the remaining cards and create a new stack of card
+	//Pos: Remove remaining cards and create a new stack of card
 	void reshuffle()
 	{
 		while (!stackOfDeck.empty()) 
