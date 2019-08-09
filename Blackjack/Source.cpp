@@ -39,7 +39,9 @@ int main() {
 						cout << "Not Enought Players. " << endl;
 						return 0;
 					}
+				}
 
+				for (int index = 0; index < players.size(); index++) {
 					players[index].playAgain(); // reset player hand
 					dealer.playAgain();			//reset dealer hand
 					npcPlayer.playAgain();
@@ -86,9 +88,7 @@ int main() {
 					{
 						if (players[index].isBlackjack()) 	//if player first two card is blackjack, automatically wins
 						{
-							cout << "  ****************" << endl;
 							cout << "  *  Blackjack!  *" << endl;
-							cout << "  ****************" << endl;
 							choice = 2;
 							break;
 						}
@@ -105,9 +105,9 @@ int main() {
 								cout << "Current hand: " << players[index] << endl;
 								if (players[index].isBusted(players[index].playerCurrentHandValue())) //check if busted
 								{	
-									cout << "  *************" << endl;
+						
 									cout << "  *  Busted!  *" << endl;
-									cout << "  *************" << endl;
+					
 									choice = 2;
 									break;
 								}
