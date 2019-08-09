@@ -8,9 +8,9 @@ private:
 	int playerBalance;
 	int playerBet;
 	int playerHandTotal;
-    busted = false;
-    blackJack = false;
-    standing = false;
+    bool busted = false;
+    bool blackJack = false;
+    bool standing = false;
 
     int getCardValue(string card){
         int cardValue = 0;
@@ -39,7 +39,7 @@ private:
             }
         }
         playerHandTotal = currPts;
-        return pslayerHandTotal;
+        return playerHandTotal;
     }
     
 
@@ -51,19 +51,44 @@ public:
 		this->playerHandTotal = 0;
 	}
 
-	void playerStatus()
-	{
-        this->updatePlayerTotal();
-		if (playerHandTotal > 21)
-		{
-			busted = true;
-		}
-		if (playerHandTotal == 21)
-		{
-			blackJack = true;
-		}
-	}
+    bool isBusted()
+    {
+        return (playerHandTotal > 21);
+        this->playerBalance -= playerBet;
+    }
+    
+    //Pre: If the player first two cards is A and a 10 pts card, player will wins automatically
+    //Pos: Player wins if the first two cards are A and a 10 pts card (10, J, Q, K)
+    bool isBlackjack() {
+        return (getBlackjack(hand[0], hand[1]));
+        this->playerBalance += playerBet;
+    }
+    //Pre: Helper function that check the first two cards
+    //Pos: Check first two cards
+    bool getBlackjack(string cardOne, string cardTwo)
+    {
+        return ((cardOne == "A" && (cardTwo == "10" || cardTwo == "J" ||cardTwo == "Q" ||  cardTwo == "K"))
+                || (cardTwo == "A" && (cardOne == "10" || cardOne == "J" || cardOne == "Q" || cardOne == "K")));
+    }
 
+    //Pre: Player wins if total point are less than 21 and greater than dealer's hand
+    //Pos: Player wins by not busted and have more points than the dealer
+    bool playerWins( int dealerHandPts)
+    {
+        return ((playerHandTotal <= 21 && playerHandTotal > dealerHandPts) ||
+                (playerHandTotal <= 21 && dealerHandPts > 21));
+    }
+    
+    //Pre: Will check if both player and dealer have same amount of points
+    //Pos: Draw round when dealer and player have same amount of points
+    bool isEqualHand(int playerHandPts, int dealerHandPts)
+    {
+        return (playerHandPts == dealerHandPts);
+    }
+
+
+
+    
 	void playerReset()
 	{
 		busted = false;
