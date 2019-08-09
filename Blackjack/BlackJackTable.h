@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "NPCPlayer.h"
 
-class BlackJackTable
+class BlackJackTable : Player
 {
 private:
 	int numberOfPlayers;
@@ -11,7 +11,7 @@ private:
 	NPCPlayer npc;
 	Deck deck;
 public:
-	BlackJackTable(int numPlayers)
+	BlackJackTable(int numPlayers) : Player(1)
 	{
 		this->numberOfPlayers = numPlayers;
 		players.resize(numberOfPlayers);

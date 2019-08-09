@@ -12,9 +12,9 @@ int main() {
 	string card;
 	Deck deck;
 	NPCPlayer computerPlayer;
-	vector<Players> players;
-	Players dealer(1);
-	Players npcPlayer(1);
+	vector<Player> players;
+	Player dealer(1);
+	Player npcPlayer(1);
 
 	deck.createDeck();
 	while (!valid) {
@@ -32,10 +32,9 @@ int main() {
 				for (int index = 0; index < players.size(); index++) 
 				{
 					if (players[index].getBalance() <= 0) {
-						players[index].playAgain(); //Reset player current hand
 						players.erase(players.begin() + index); //Remove player
 					}
-					if (players.size() == 0) 
+					if (players.size() <= 0) 
 					{
 						cout << "Not Enought Players. " << endl;
 						return 0;
@@ -48,6 +47,8 @@ int main() {
 					cin >> playerBets;
 					players[index].setPlayersBets(playerBets);	//get player bets
 					players[index].getRemainingBalance();
+					npcPlayer.setPlayersBets(1);		//Computer player bet
+					npcPlayer.getRemainingBalance();
 				}
 			
 				for (int cards = 0; cards < 2; cards++)  //Draw 2 cards for each player
@@ -141,14 +142,9 @@ int main() {
                         cout << "Computer Player Hand: " << npcPlayer << endl;
                         again = true;
                     }
-
-					npcPlayer.setPlayersBets(1);
-				npcPlayer.getRemainingBalance();
-
 				}
 				cout << "Current Hand Value : " << npcPlayer.getPlayerHandTotal() << endl;
-				cout << "Computer Player Balance: " << npcPlayer.getBalance() << endl;;
-				cout << endl;
+				cout << "Computer Player Balance: " << npcPlayer.getBalance() << endl;
 
 				do
 				{
@@ -156,7 +152,6 @@ int main() {
 					dealer.playerCurrentHandValue();
 					card = deck.drawCards();
 					dealer.distributeCards(card);
-			
 				} while (!(dealer.getPlayerHandTotal() >= 17));	//draw another card until 17 or more
 
 				cout << "Dealer Hand Total: " << dealer.getPlayerHandTotal() << endl;
