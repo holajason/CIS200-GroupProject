@@ -24,7 +24,10 @@
     <ClInclude Include="NPCPlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BlackJackTable.h">
+    <ClInclude Include="Player(new).h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Table.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
