@@ -143,10 +143,11 @@ int main() {
                     }
 
 					npcPlayer.setPlayersBets(1);
-					npcPlayer.getRemainingBalance();
+				npcPlayer.getRemainingBalance();
 
 				}
 				cout << "Current Hand Value : " << npcPlayer.getPlayerHandTotal() << endl;
+				cout << "Computer Player Balance: " << npcPlayer.getBalance() << endl;;
 				cout << endl;
 
 				do
