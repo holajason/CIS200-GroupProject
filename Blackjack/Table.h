@@ -8,7 +8,6 @@ private:
 	vector<Player> players;
 	Player dealer;
 	Deck deck;
-
 	void deckStatus()
 	{
 		if (deck.getNumberOfCards() <= 30)
@@ -33,7 +32,7 @@ public:
 	int getPlayerBalance(int playerIndex)
 	{
         int balance = 0;
-		for (int index = 0; index < players.size(); ++index)
+		for (int index = 0; index < players.size(); index++)
 		{
 			if (playerIndex == index)
 				balance = players.at(index).getPlayerBalance();
@@ -41,16 +40,6 @@ public:
         return balance;
 	}
 
-	vector<string> getPlayerHand(int playerIndex) const
-	{
-        int total;
-		for (int index = 0; index < players.size(); ++index)
-		{
-			if (playerIndex == index)
-				total = players.at(index).getPlayerHand());
-		}
-        return temp;
-	}
 
 	void setPlayerBets(int wager)
 	{
@@ -66,19 +55,13 @@ public:
 
 	void initRound()
 	{
-		for (int index = 0; index < players.size(); ++index)
-		{
-			for (int numberOfCards = 0; numberOfCards < 2; ++numberOfCards)
-			{
-				players.at(index).addCardToHand(deck.drawCards());
-			}
-
-			players.at(index).playerStatus();
-		}
-
-		dealer.addCardToHand(deck.drawCards());
-		dealer.addCardToHand(deck.drawCards());
-		dealer.playerStatus();
+        for (int numberOfCards = 0; numberOfCards < 2; ++numberOfCards)
+        {
+            for(int index = 0; index < players.size(); index++){
+                players.at(index).addCardToHand(deck.drawCards());
+            }
+            dealer.addCardToHand(deck.drawCards());
+        }
 	}
 
 	bool playerAbleToHit(int playerIndex)
@@ -101,7 +84,6 @@ public:
 				if (hit == true)
 				{
 					players.at(index).addCardToHand(deck.drawCards());
-					players.at(index).playerStatus();
 					return;
 				}
 				else if (hit == false)
@@ -129,4 +111,13 @@ public:
 		this->deckStatus();
 	}
 
+    friend ostream& operator << (ostream& os, Table& player)
+    {
+        for (int index = 0; index < player.players.size(); index++)
+        {
+           // os << "Player " << index+1 << ": " << player.players[index] << " ";
+            
+        }
+        return os;
+    }
 };

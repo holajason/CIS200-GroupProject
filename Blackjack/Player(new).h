@@ -107,10 +107,6 @@ public:
 		return playerBet;
 	}
 
-	bool isBusted()
-	{
-		return busted;
-	}
 
 	bool hasBlackJack()
 	{
@@ -159,4 +155,13 @@ public:
 	{
 		return hand;
 	}
+    
+//    friend ostream& operator << (ostream& os, Player& player)
+//    {
+//        for (int index = 0; index < player.hand.size(); index++)
+//        {
+//            os << "Dealer << " << player.hand[index] << " ";
+//        }
+//        return os;
+//    }
 };
