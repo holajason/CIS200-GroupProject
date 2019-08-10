@@ -1,12 +1,12 @@
 #pragma once
 #include "Player.h"
-/*
 class NPCPlayer : public Player {
 private:
 	int currentHandValue;
-
+	
+	string cardTwo = "2";
 public:
-	NPCPlayer() : Player {
+	NPCPlayer() : Player(1) {
 			
 	}
 
@@ -36,4 +36,3 @@ public:
 	}
 
 };
-*/

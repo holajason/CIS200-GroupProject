@@ -31,12 +31,6 @@ public:
 		}
 	}
 
-    void printStack(){
-        while(!stackOfDeck.empty()){
-            cout << stackOfDeck.top() << " ";
-           stackOfDeck.pop();
-        }
-    }
 	//Pre: Method that will draw a card from the top of the stack
 	//Pos: Drawing a card
 	string drawCards()

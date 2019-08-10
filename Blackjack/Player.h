@@ -1,7 +1,7 @@
 #pragma once
 #include <stdlib.h>
 #include "Deck.h"
-/*
+
 
 class Player {
 private:
@@ -174,4 +174,3 @@ public:
 		return os;
 	}
 };
-*/
