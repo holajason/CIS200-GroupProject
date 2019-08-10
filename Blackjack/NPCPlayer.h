@@ -1,4 +1,5 @@
 #pragma once
+/*
 #include "Player.h"
 class NPCPlayer : public Player {
 private:
@@ -36,3 +37,4 @@ public:
 	}
 
 };
+*/

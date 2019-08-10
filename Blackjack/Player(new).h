@@ -107,10 +107,7 @@ public:
 		return playerBet;
 	}
 
-	bool isBusted()
-	{
-		return busted;
-	}
+
 
 	bool hasBlackJack()
 	{
@@ -158,5 +155,16 @@ public:
 	vector<string> getPlayerHand() const
 	{
 		return hand;
+	}
+
+	string showOneCard() {
+		return hand.at(1);
+	}
+	
+	friend ostream& operator <<(ostream& os, Player& table) {
+		for (int index = 0; index < table.hand.size(); index++) {
+			os << table.hand[index] << " ";
+		}
+		return os;
 	}
 };

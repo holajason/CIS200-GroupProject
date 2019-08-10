@@ -41,16 +41,6 @@ public:
         return balance;
 	}
 
-	vector<string> getPlayerHand(int playerIndex) const
-	{
-        int total;
-		for (int index = 0; index < players.size(); ++index)
-		{
-			if (playerIndex == index)
-				total = players.at(index).getPlayerHand());
-		}
-        return temp;
-	}
 
 	void setPlayerBets(int wager)
 	{
@@ -66,19 +56,15 @@ public:
 
 	void initRound()
 	{
-		for (int index = 0; index < players.size(); ++index)
+		for (int numberOfCards = 0; numberOfCards < 2; ++numberOfCards)
 		{
-			for (int numberOfCards = 0; numberOfCards < 2; ++numberOfCards)
+			for (int index = 0; index < players.size(); ++index)
 			{
+
 				players.at(index).addCardToHand(deck.drawCards());
 			}
-
-			players.at(index).playerStatus();
+			dealer.addCardToHand(deck.drawCards());
 		}
-
-		dealer.addCardToHand(deck.drawCards());
-		dealer.addCardToHand(deck.drawCards());
-		dealer.playerStatus();
 	}
 
 	bool playerAbleToHit(int playerIndex)
@@ -101,7 +87,7 @@ public:
 				if (hit == true)
 				{
 					players.at(index).addCardToHand(deck.drawCards());
-					players.at(index).playerStatus();
+			
 					return;
 				}
 				else if (hit == false)
@@ -113,6 +99,20 @@ public:
 		}
 	}
 
+	void showDealerCard() {
+		cout << "Dealer: " << "|#| " << dealer.showOneCard() << " ";
+		cout << endl;
+	}
+
+	friend ostream& operator <<(ostream& os, Table& table) {
+		for (int index = 0; index < table.players.size(); index++) {
+			os << "Player " << index +1 << ": " << table.players[index] <<" ";
+			os << endl;
+		}
+
+		
+		return os;
+	}
 	void reset()
 	{
 		for (int index = 0; index < players.size(); ++index)

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "Deck.h"
 
-
+/*
 class Player {
 private:
 	int numberOfPlayers;
@@ -174,3 +174,5 @@ public:
 		return os;
 	}
 };
+
+*/

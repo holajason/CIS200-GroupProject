@@ -4,10 +4,10 @@ using namespace std;
 int main()
 {
 	int numPlayers;
-	cout << "How many players at the table?";
+	cout << "Number Of Players: ";
 	cin >> numPlayers;
 	Table table(numPlayers);
-
+	/*
 	int playerBet;
 	for (int index = 0; index < table.getNumberOfPlayers(); ++index)
 	{
@@ -15,9 +15,12 @@ int main()
 		cin >> playerBet;
 		table.setPlayerBets(playerBet);
 	}
-
+	*/
 	table.initRound();
+	table.showDealerCard();
+	//cout << table << endl;
 
+	/*
 	int playerDecision = 0;
 	for (int index = 0; index < table.getNumberOfPlayers(); ++index)
 	{
@@ -37,7 +40,7 @@ int main()
 		cout << endl << endl;
 	}
 
-
+	*/
 	system("pause");
 	return 0;
 }
