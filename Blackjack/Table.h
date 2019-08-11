@@ -32,26 +32,12 @@ public:
 
 	int getPlayerBalance(int playerIndex)
 	{
-        int balance = 0;
-		for (int index = 0; index < players.size(); ++index)
-		{
-			if (playerIndex == index)
-				balance = players.at(index).getPlayerBalance();
-		}
-        return balance;
+		return players.at(playerIndex).getPlayerBalance();
 	}
 
-
-	void setPlayerBets(int wager)
+	void setPlayerBet(int playerIndex, int wager)
 	{
-		for (int index = 0; index < players.size(); ++index)
-		{
-			if (players.at(index).getBettingAmount() == 0)
-			{
-				players.at(index).setBettingAmount(wager);
-				break;
-			}
-		}
+		players.at(playerIndex).setBettingAmount(wager);
 	}
 
 	void initRound()
@@ -60,50 +46,88 @@ public:
 		{
 			for (int index = 0; index < players.size(); ++index)
 			{
-
 				players.at(index).addCardToHand(deck.drawCards());
 			}
-			dealer.addCardToHand(deck.drawCards());
+		dealer.addCardToHand(deck.drawCards());
 		}
 	}
 
-	bool playerAbleToHit(int playerIndex)
+	bool playerCanHit(int playerIndex)
 	{
-		for (int index = 0; index < players.size(); ++index)
-		{
-			if (playerIndex == index)
-			{
-				if (players.at(index).isBusted() || players.at(index).hasBlackJack() || players.at(index).isStanding())
+		if (players.at(playerIndex).isBusted() || players.at(playerIndex).hasBlackJack() || players.at(playerIndex).isStanding()
+			|| players.at(playerIndex).Has21())
                     return false;
-			}
-		}
         return true;
 	}
-	void playerTurn(int playerIndex, bool hit)
+	void playerHit(int playerIndex)
 	{
-		for (int index = 0; index < players.size(); ++index)
+		players.at(playerIndex).addCardToHand(deck.drawCards());
+		players.at(playerIndex).updatePlayerTotal();
+	}
+
+	void playerStand(int playerIndex)
+	{
+		players.at(playerIndex).setToStanding();
+	}
+	void dealerTurn()
+	{
+		while (dealer.getPlayerHandTotal() < 17)
 		{
-			if (playerIndex == index)
-				if (hit == true)
-				{
-					players.at(index).addCardToHand(deck.drawCards());
-			
-					return;
-				}
-				else if (hit == false)
-				{
-					players.at(index).setToStanding();
-					return;
-				}
-
+			dealer.addCardToHand(deck.drawCards());
+			dealer.updatePlayerTotal();
 		}
+		if (dealer.isBusted())
+		{ 
+			//remaining players on table get paid
+			for (int index = 0; index < players.size(); ++index)
+			{
+				if (!(players.at(index).isBusted()) && !(players.at(index).hasBlackJack()))
+					players.at(index).winBet();
+			}
+		}
+		else
+		{
+			for (int index = 0; index < players.size(); ++index)
+			{
+				if (!(players.at(index).isBusted()) && !(players.at(index).hasBlackJack()))
+				{
+					if (players.at(index).isEqualHand(dealer.getPlayerHandTotal()))
+					{
+						//something to indicate draw
+					}
+					else if (players.at(index).playerWins(dealer.getPlayerHandTotal()))
+					{
+						//payout winning player
+						players.at(index).winBet();
+					}
+					else
+					{
+						//player loses money
+						players.at(index).loseBet();
+					}
+				}
+			}
+		}
+
 	}
 
-	void showDealerCard() {
-		cout << "Dealer: " << "|#| " << dealer.showOneCard() << " ";
-		cout << endl;
+	string showDealerInitialHand() {
+		string dealerCards;
+		string symbol = "|#| ";
+		dealerCards = "Dealer: " + symbol + dealer.showOneCard() + " " + "\n";
+		return dealerCards;
 	}
 
+	string showPlayerCards(int playerIndex)
+	{
+		string playerCards;
+		for (int index = 0; index < players.at(playerIndex).getPlayerHand().size(); index++)
+		{
+			playerCards += players.at(playerIndex).getPlayerHand().at(index) + " ";
+		}
+
+		return playerCards;
+	}
 	friend ostream& operator <<(ostream& os, Table& table) {
 		for (int index = 0; index < table.players.size(); index++) {
 			os << "Player " << index +1 << ": " << table.players[index] <<" ";

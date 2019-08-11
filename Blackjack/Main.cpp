@@ -7,40 +7,52 @@ int main()
 	cout << "Number Of Players: ";
 	cin >> numPlayers;
 	Table table(numPlayers);
-	/*
-	int playerBet;
-	for (int index = 0; index < table.getNumberOfPlayers(); ++index)
+
+	char userSelect = ' ';
+
+	while (toupper(userSelect) != 'N')
 	{
-		cout << "Player " << index + 1 << " betting amount?";
-		cin >> playerBet;
-		table.setPlayerBets(playerBet);
-	}
-	*/
-	table.initRound();
-	table.showDealerCard();
-	//cout << table << endl;
-
-	/*
-	int playerDecision = 0;
-	for (int index = 0; index < table.getNumberOfPlayers(); ++index)
-	{
-		cout << "Player	" << index + 1 << ":" << endl;
-		for (int cards = 0; cards < table.getPlayerHand(index).size(); ++cards)
+		
+		int playerBet;
+		for (int index = 0; index < table.getNumberOfPlayers(); ++index)
 		{
-			cout << table.getPlayerHand(index).at(cards) << " ";
+			cout << "Player " << index + 1 << " bet? ";
+			cin >> playerBet;
+			table.setPlayerBet(index, playerBet);
 		}
+		
+		table.initRound();
+		cout << table.showDealerInitialHand();
+		cout << table << endl;
 
-		while (table.playerAbleToHit(index))
+		int hitOrStand;
+		for (int index = 0; index < table.getNumberOfPlayers(); ++index)
 		{
-			cout << "Hit(1) or stand?(0)" << endl;
-			cin >> playerDecision;
-			table.playerTurn(index, playerDecision);
+			cout << "Player	" << index + 1 << ": " << table.showPlayerCards(index) << endl;
+			
+			while (table.playerCanHit(index))
+			{
+				cout << "Hit(1) or stand?(0)" << endl;
+				cin >> hitOrStand;
+				if (hitOrStand) 
+				{
+					table.playerHit(index);
+					cout << table.showPlayerCards(index) << endl;
+				}
+				else
+					table.playerStand(index);
+			}
+
+			cout << endl << endl;
 		}
+		
+		table.dealerTurn();
+		cout << table << endl;
 
-		cout << endl << endl;
+		table.reset();
+		cout << "Play again?(y/n)" << endl;
+		cin >> userSelect;
 	}
-
-	*/
 	system("pause");
 	return 0;
 }
