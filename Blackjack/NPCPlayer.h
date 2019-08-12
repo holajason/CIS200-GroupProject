@@ -1,17 +1,13 @@
 #pragma once
-/*
+
 #include "Player.h"
-class NPCPlayer : public Player {
+class computerPlayer : public Player {
 private:
 	int currentHandValue;
-	
-	string cardTwo = "2";
 public:
-	NPCPlayer() : Player(1) {
-			
+	computerPlayer() {
+		this->currentHandValue = 0;
 	}
-
-
 	bool HitOrStand(int currentHandTotal, string dealerFaceUpCard)
 	{
 		//If player hand value is greater or equal to 17 or greater, stand
@@ -37,4 +33,3 @@ public:
 	}
 
 };
-*/

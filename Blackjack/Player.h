@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "Deck.h"
 
-/*
 class Player {
 private:
 	int numberOfPlayers;
@@ -11,22 +10,15 @@ private:
     int playerHandTotal;
 	vector<string>playerHand;
 public:
-	Player(int numberOfPlayers)
+	Player()
 	{
 		this->playerBalance = 100;
 		this->playerBet = 0;
         this->playerHandTotal = 0;
-		this->numberOfPlayers = this->getNumberOfPlayers(numberOfPlayers);
+	
 	}
 
-	int getNumberOfPlayers(int numPlayers) 
-	{
-		if (numPlayers < 0 || numPlayers > 10) 
-		{
-			throw invalid_argument("Invalid Number Of Players(0-10)");
-		}
-		return numPlayers;
-	}
+	
 
 	//Pre: Function that will hand pthe player a card
 	//Pos: Hand a card to the player
@@ -165,6 +157,13 @@ public:
 		playerHand.clear();
 	}
 
+	string gameSummary() {
+		string outString = "";
+		outString = "*******************************************\n";
+		outString+= "*              Game Overview              *\n";
+		outString+= "*******************************************\n";
+		return outString;
+	}
 	friend ostream& operator << (ostream& os, Player& player) 
 	{
 		for (int index = 0; index < player.playerHand.size(); index++) 
@@ -175,4 +174,3 @@ public:
 	}
 };
 
-*/

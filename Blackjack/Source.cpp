@@ -1,8 +1,8 @@
 #include "Deck.h"
 #include "Player.h"
 #include "NPCPlayer.h"
-/*
 
+/*
 int main() {
 	srand(unsigned(time(0)));
 	int numberOfPlayers;
@@ -13,8 +13,10 @@ int main() {
 	Deck deck;
 	NPCPlayer computerPlayer;
 	vector<Player> players;
-	Player dealer(1);
-	Player npcPlayer(1);
+	//Player dealer(1);
+	//Player npcPlayer(1);
+	Player dealer;
+	Player npcPlayer;
 
 	deck.createDeck();
 	while (!valid) {
@@ -22,7 +24,8 @@ int main() {
 		{
 			cout << "Number of Players: ";
 			cin >> numberOfPlayers;
-			dealer.getNumberOfPlayers(numberOfPlayers);
+			//dealer.getNumberOfPlayers(numberOfPlayers);
+
 			for (int numPlayers = 0; numPlayers < numberOfPlayers; numPlayers++) 
 			{
 				players.emplace_back(numPlayers);
