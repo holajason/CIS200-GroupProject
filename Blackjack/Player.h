@@ -4,7 +4,6 @@
 
 class Player {
 private:
-	int numberOfPlayers;
 	int playerBalance;
 	int playerBet;
     int playerHandTotal;
@@ -17,8 +16,6 @@ public:
         this->playerHandTotal = 0;
 	
 	}
-
-	
 
 	//Pre: Function that will hand pthe player a card
 	//Pos: Hand a card to the player

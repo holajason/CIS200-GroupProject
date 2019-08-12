@@ -7,12 +7,10 @@ private:
 	int numberOfPlayers;
 	vector<Player> players;
 	Player dealer;
-	Deck deck;
-	string card;
 	Player npcPlayer;
 	computerPlayer computerPlayer;
-	int playerBets;
-	int choice;
+	Deck deck;
+	string card;
 	void deckStatus()
 	{
 		if (deck.getNumberOfCards() <= 30)
@@ -69,6 +67,7 @@ public:
 	}
 
 	void restartGame() {
+		int playerBets;
 		for (int index = 0; index < players.size(); index++) {
 			players[index].playAgain(); // reset player hand
 			dealer.playAgain();			//reset dealer hand
@@ -84,6 +83,7 @@ public:
 
 
 	void startGame() {
+		int choice;
 		for (int index = 0; index < players.size(); index++)
 		{
 			cout << "\n-----------------------------------" << endl;
@@ -133,7 +133,7 @@ public:
 	}
 
 	void getDealerFaceUpcard() {
-		cout << "DEALER Hand: |#| " << dealer.displayOneCard() << endl;	//One card face down, one card face up
+		cout << "DEALER Hand: |#| " << dealer.displayOneCard() << endl;	
 	}
 
 	void computerPlayerTurn() {

@@ -4,7 +4,6 @@ int main() {
 	srand(unsigned(time(0)));
 	int numPlayers;
 	int menuOption;
-	bool valid = false;
 	try {
 		cout << "Players Per Table: ";
 		cin >> numPlayers;
@@ -21,7 +20,6 @@ int main() {
 			cout << "1. Play Again" << endl;
 			cout << "2. Quit" << endl;
 			cin >> menuOption;
-			valid = true;
 		} while (menuOption != 2);
 	}
 	catch (exception& e) {

@@ -1,6 +1,6 @@
 #include "Table.h"
 using namespace std;
-
+/*
 int main()
 {
 	int numPlayers;
@@ -56,3 +56,4 @@ int main()
 	system("pause");
 	return 0;
 }
+*/
