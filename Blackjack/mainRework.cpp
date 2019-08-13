@@ -10,10 +10,10 @@ int main() {
 		Table table(numPlayers);
 		do {
 			table.removeInsufficientFundPlayer();
-			table.restartGame();
+			table.getPlayersBet();
 			table.initRound();
-			table.getDealerFaceUpcard();
-			table.startGame();
+			table.showDealerFaceupCard();
+			table.playerTurn();
 			table.computerPlayerTurn();
 			table.dealerTurn();
 			table.gameSummary();

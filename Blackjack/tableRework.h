@@ -1,14 +1,13 @@
 #pragma once
 #include "Player.h"
-#include "NPCPlayer.h"
+
 class Table : Player
 {
 private:
 	int numberOfPlayers;
 	vector<Player> players;
 	Player dealer;
-	Player npcPlayer;
-	computerPlayer computerPlayer;
+	Player computerPlayer;
 	Deck deck;
 	string card;
 	void deckStatus()
@@ -39,7 +38,7 @@ public:
 			card = deck.drawCards();
 			dealer.distributeCards(card);
 			card = deck.drawCards();
-			npcPlayer.distributeCards(card);
+			computerPlayer.distributeCards(card);
 		}
 		deckStatus();
 	}
@@ -54,6 +53,7 @@ public:
 	}
 
 	void removeInsufficientFundPlayer() {
+		vector<string>temp;
 		for (int index = 0; index < players.size(); index++)
 		{
 			if (players[index].getBalance() <= 0) {
@@ -66,23 +66,23 @@ public:
 		}
 	}
 
-	void restartGame() {
+	void getPlayersBet() {
 		int playerBets;
 		for (int index = 0; index < players.size(); index++) {
 			players[index].playAgain(); // reset player hand
 			dealer.playAgain();			//reset dealer hand
-			npcPlayer.playAgain();
+			computerPlayer.playAgain();
 			cout << "Player " << index + 1 << " Please Place Your Bet: ";
 			cin >> playerBets;
 			players[index].setPlayersBets(playerBets);	//get player bets
 			players[index].getRemainingBalance();
 		}
-		npcPlayer.setPlayersBets(1);		//Computer player bet
-		npcPlayer.getRemainingBalance();
+		computerPlayer.setPlayersBets(1);		//Computer player bet
+		computerPlayer.getRemainingBalance();
 	}
 
 
-	void startGame() {
+	void playerTurn() {
 		int choice;
 		for (int index = 0; index < players.size(); index++)
 		{
@@ -132,30 +132,28 @@ public:
 		}
 	}
 
-	void getDealerFaceUpcard() {
-		cout << "DEALER Hand: |#| " << dealer.displayOneCard() << endl;	
+	void showDealerFaceupCard() {
+		cout << "\nDEALER Hand: |#| " << dealer.displayOneCard() << endl;	
 	}
 
 	void computerPlayerTurn() {
-		string outstring;
 		bool again = false;
-		
 		while (!again)
 		{
-			npcPlayer.playerCurrentHandValue();
-			if (computerPlayer.HitOrStand(npcPlayer.getPlayerHandTotal(), dealer.displayOneCard()))
+			computerPlayer.playerCurrentHandValue();
+			if (computerPlayer.HitOrStand(computerPlayer.getPlayerHandTotal(), dealer.displayOneCard()))
 			{
 				card = deck.drawCards();
-				npcPlayer.distributeCards(card);
+				computerPlayer.distributeCards(card);
 				again = false;
 			}
 			else
 			{
-				cout << "Computer Player Hand: " << npcPlayer << endl;
+				cout << "\nComputer Player Hand: " << computerPlayer << endl;
 				again = true;
 			}
 		}
-		cout << "Computer Hand Value : " << npcPlayer.getPlayerHandTotal() << endl;
+		cout << "Computer Hand Value : " << computerPlayer.getPlayerHandTotal() << endl;
 		cout << "------------------------------------------" << endl;
 	}
 
@@ -171,12 +169,39 @@ public:
 		cout << "------------------------------------------" << endl;
 	}
 
+	void computerPlayerSummary() {
+		if (computerPlayer.isBlackjack())
+		{
+			computerPlayer.getWinningAmount();
+		}
+		else
+		{
+			computerPlayer.playerCurrentHandValue();
+			//check if computer player is busted first
+			if (computerPlayer.isBusted(computerPlayer.getPlayerHandTotal()))
+			{
+				cout << "Computer Player Bets: " << computerPlayer.getPlayerBets() << endl;
+			}
+			//If computer player and deale have the same pts, there's no winner
+			else if (computerPlayer.isEqualHand(computerPlayer.getPlayerHandTotal(), dealer.getPlayerHandTotal()))
+			{
+				computerPlayer.drawRound();
+			}
+			//Players wins, if not busted and have more points than the dealer
+			else if (computerPlayer.playerWins(computerPlayer.getPlayerHandTotal(), dealer.getPlayerHandTotal()))
+			{
+				computerPlayer.getWinningAmount();
+			}
+		}
+		cout << "Computer Player Balance: " << computerPlayer.getBalance() << endl;
+		cout << "------------------------------------------" << endl;
+	}
+
 	void gameSummary() {
 		cout <<  Player::gameSummary();
 		for (int index = 0; index < players.size(); index++)
 		{
 			cout << "Player: " << index + 1 << " | Balance: " << players[index].getBalance() << endl;
-
 			if (players[index].isBlackjack())
 			{
 				players[index].getWinningAmount();
@@ -187,7 +212,6 @@ public:
 			{
 				cout << "Current Hand: " << players[index] << endl;
 				players[index].playerCurrentHandValue();
-
 				//check if player has busted first
 				if (players[index].isBusted(players[index].getPlayerHandTotal()))
 				{
@@ -213,47 +237,11 @@ public:
 					cout << "Player Bets: " << players[index].getPlayerBets() << endl;
 				}
 			}
-
 			cout << "Player Hand Total: " << players[index].getPlayerHandTotal() << endl;
 			cout << "Current Balance: " << players[index].getBalance() << endl;
 			cout << "------------------------------------------" << endl;
 		}
-
 		computerPlayerSummary();
-	
-		deckStatus();
-	}
-
-	void computerPlayerSummary() {
-		if (npcPlayer.isBlackjack())
-		{
-			npcPlayer.getWinningAmount();
-		}
-		else
-		{
-			npcPlayer.playerCurrentHandValue();
-			//check if computer player is busted first
-			if (npcPlayer.isBusted(npcPlayer.getPlayerHandTotal()))
-			{
-				cout << "Computer Player Bets: " << npcPlayer.getPlayerBets() << endl;
-			}
-			//If computer player and deale have the same pts, there's no winner
-			else if (npcPlayer.isEqualHand(npcPlayer.getPlayerHandTotal(), dealer.getPlayerHandTotal()))
-			{
-				npcPlayer.drawRound();
-			}
-			//Players wins, if not busted and have more points than the dealer
-			else if (npcPlayer.playerWins(npcPlayer.getPlayerHandTotal(), dealer.getPlayerHandTotal()))
-			{
-				npcPlayer.getWinningAmount();
-			}
-			else
-			{
-				cout << "NPC Player Bets: " << npcPlayer.getPlayerBets() << endl;
-			}
-		}
-		cout << "Computer Player Balance: " << npcPlayer.getBalance() << endl;
-		cout << "------------------------------------------" << endl;
 	}
 
 };

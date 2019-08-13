@@ -1,6 +1,6 @@
 #include "Deck.h"
 #include "Player.h"
-#include "NPCPlayer.h"
+
 
 /*
 int main() {
