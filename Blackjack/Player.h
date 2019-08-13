@@ -30,15 +30,12 @@ public:
     int getCardValue(string card)
 	{
         int cardValue = 0;
-        if(card == "2" || card == "3" || card == "4" ||
-           card == "5" || card == "6" || card == "7" ||
-           card == "8" || card == "9")
-		{
-           cardValue = stoi(card);
-        }
-        else if(card == "10" || card == "J" || card == "Q" || card == "K"){
+         if(card == "J" || card == "Q" || card == "K"){
             cardValue = 10;
         }
+		 else {
+			 cardValue = stoi(card);
+		 }
         return cardValue;
     }
 
@@ -47,7 +44,7 @@ public:
     int playerCurrentHandValue()
 	{
         int currentPts= 0;
-		//First iteration that will only add all cards value except A's
+		//First iteration that will add all cards value except A's
         for(int index = 0; index < playerHand.size(); index++)
 		{
             currentPts += this->getCardValue(playerHand[index]);
