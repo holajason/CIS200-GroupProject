@@ -12,6 +12,7 @@ private:
 	string card;
 	void deckStatus()
 	{
+		cout << "Deck Size: " << deck.getNumberOfCards();
 		if (deck.getNumberOfCards() <= 30)
 		{
 			deck.reshuffle();
@@ -32,13 +33,13 @@ public:
 		{
 			for (int index = 0; index < players.size(); ++index)
 			{
-				card = deck.drawCards();
-				players[index].addOneCardToHand(card);
+			//	card = deck.drawCards();
+				players[index].addOneCardToHand(deck.drawCards());
 			}
-			card = deck.drawCards();
-			dealer.addOneCardToHand(card);
-			card = deck.drawCards();
-			computerPlayer.addOneCardToHand(card);
+			//card = deck.drawCards();
+			dealer.addOneCardToHand(deck.drawCards());
+			//card = deck.drawCards();
+			computerPlayer.addOneCardToHand(deck.drawCards());
 		}
 		deckStatus();
 	}
