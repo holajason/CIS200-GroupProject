@@ -24,21 +24,18 @@
     <ClInclude Include="Player(new).h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Table.h">
+    <ClInclude Include="Table2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tableRework.h">
+    <ClInclude Include="Table.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mainRework.cpp">
+    <ClCompile Include="source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

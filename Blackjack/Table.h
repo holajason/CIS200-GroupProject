@@ -1,14 +1,15 @@
 #pragma once
-#include "Player(new).h"
+#include "Player.h"
 
-class Table
+class Table : Player
 {
 private:
 	int numberOfPlayers;
 	vector<Player> players;
 	Player dealer;
+	Player computerPlayer;
 	Deck deck;
-
+	string card;
 	void deckStatus()
 	{
 		if (deck.getNumberOfCards() <= 30)
@@ -20,24 +21,9 @@ private:
 public:
 	Table(int numberOfPlayers)
 	{
-		this->numberOfPlayers = numberOfPlayers;
+		this->numberOfPlayers = getNumberOfPlayers( numberOfPlayers);
 		this->players.resize(numberOfPlayers);
 		deck.createDeck();
-	}
-
-	int getNumberOfPlayers()
-	{
-		return numberOfPlayers;
-	}
-
-	int getPlayerBalance(int playerIndex)
-	{
-		return players.at(playerIndex).getPlayerBalance();
-	}
-
-	void setPlayerBet(int playerIndex, int wager)
-	{
-		players.at(playerIndex).setBettingAmount(wager);
 	}
 
 	void initRound()
@@ -46,111 +32,213 @@ public:
 		{
 			for (int index = 0; index < players.size(); ++index)
 			{
-				players.at(index).addCardToHand(deck.drawCards());
+				card = deck.drawCards();
+				players[index].addOneCardToHand(card);
 			}
-		dealer.addCardToHand(deck.drawCards());
+			card = deck.drawCards();
+			dealer.addOneCardToHand(card);
+			card = deck.drawCards();
+			computerPlayer.addOneCardToHand(card);
 		}
+		deckStatus();
 	}
 
-	bool playerCanHit(int playerIndex)
+	int getNumberOfPlayers(int numPlayers)
 	{
-		if (players.at(playerIndex).isBusted() || players.at(playerIndex).hasBlackJack() || players.at(playerIndex).isStanding()
-			|| players.at(playerIndex).Has21())
-                    return false;
-        return true;
-	}
-	void playerHit(int playerIndex)
-	{
-		players.at(playerIndex).addCardToHand(deck.drawCards());
-		players.at(playerIndex).updatePlayerTotal();
-	}
-
-	void playerStand(int playerIndex)
-	{
-		players.at(playerIndex).setToStanding();
-	}
-	void dealerTurn()
-	{
-		while (dealer.getPlayerHandTotal() < 17)
+		if (numPlayers <= 0 || numPlayers > 10)
 		{
-			dealer.addCardToHand(deck.drawCards());
-			dealer.updatePlayerTotal();
+			throw invalid_argument("Invalid Number Of Players(1-10)");
 		}
-		if (dealer.isBusted())
-		{ 
-			//remaining players on table get paid
-			for (int index = 0; index < players.size(); ++index)
-			{
-				if (!(players.at(index).isBusted()) && !(players.at(index).hasBlackJack()))
-					players.at(index).winBet();
+		return numPlayers;
+	}
+
+	void removeInsufficientFundPlayer() {
+		for (int index = 0; index < players.size(); index++)
+		{
+			if (players[index].getBalance() <= 0) {
+				players.erase(players.begin() + index); //Remove player
 			}
+			if (players.size() <= 0)
+			{
+				throw invalid_argument( "Not Enought Players. \n");
+			}
+		}
+	}
+
+	void getPlayersBet() {
+		int playerBets;
+		for (int index = 0; index < players.size(); index++) {
+			players[index].playAgain(); // reset player hand
+			dealer.playAgain();			//reset dealer hand
+			computerPlayer.playAgain();
+			cout << "Player " << index + 1 << " Please Place Your Bet: ";
+			cin >> playerBets;
+			players[index].setPlayersBets(playerBets);	//get player bets
+			players[index].getRemainingBalance();
+		}
+		computerPlayer.setPlayersBets(1);		//Computer player bet
+		computerPlayer.getRemainingBalance();
+	}
+
+
+	void playerTurn() {
+		int choice;
+		for (int index = 0; index < players.size(); index++)
+		{
+			cout << "\n-----------------------------------" << endl;
+			cout << "Player: " << index + 1 << " | " << "Current Balance: " << players[index].getBalance() << endl;
+			cout << "Current hand: " << players[index] << endl;	//display current hand
+			cout << "===================================" << endl;
+			do
+			{
+				if (players[index].isBlackjack()) 	//if player first two card is blackjack, automatically wins
+				{
+					cout << "****************" << endl;
+					cout << "*  Blackjack!  *" << endl;
+					cout << "****************" << endl;
+					choice = 2;
+					break;
+				}
+				else
+				{
+					cout << "Player: " << index + 1 << " | Hit(1) OR Stand(2): ";
+					cin >> choice;
+					switch (choice) {
+					case 1:
+						card = deck.drawCards();
+						cout << "===================================" << endl;
+						cout << "Player: " << index + 1 << " | ";
+						players[index].addOneCardToHand(card);
+						cout << "Current hand: " << players[index] << endl;
+						if (players[index].isBusted(players[index].playerCurrentHandValue())) //check if busted
+						{
+							cout << "*************" << endl;
+							cout << "*  Busted!  *" << endl;
+							cout << "*************" << endl;
+							choice = 2;
+							break;
+						}
+						cout << "===================================" << endl;
+						break;
+					case 2:
+						cout << "***********************************" << endl;
+						cout << "  Player: " << index + 1 << " | Current Hand: " << players[index] << endl;
+						cout << "***********************************" << endl;
+						break;
+					}
+				}
+			} while (choice != 2);
+		}
+	}
+
+	void showDealerFaceupCard() {
+		cout << "\nDEALER Hand: |#| " << dealer.displayOneCard() << endl;	
+	}
+
+	void computerPlayerTurn() {
+		bool again = false;
+		while (!again)
+		{
+			computerPlayer.playerCurrentHandValue();
+			if (computerPlayer.HitOrStand(computerPlayer.getPlayerHandTotal(), dealer.displayOneCard()))
+			{
+				card = deck.drawCards();
+				computerPlayer.addOneCardToHand(card);
+				again = false;
+			}
+			else
+			{
+				cout << "\nComputer Player Hand: " << computerPlayer << endl;
+				again = true;
+			}
+		}
+		cout << "Computer Hand Value : " << computerPlayer.getPlayerHandTotal() << endl;
+		cout << "------------------------------------------" << endl;
+	}
+
+	void dealerTurn() {
+		do
+		{
+			cout << "DEALER Hand: " << dealer << endl;
+			dealer.playerCurrentHandValue();
+			card = deck.drawCards();
+			dealer.addOneCardToHand(card);
+		} while (!(dealer.getPlayerHandTotal() >= 17));	//draw another card until 17 or more
+		cout << "Dealer Hand Total : " << dealer.getPlayerHandTotal() << endl;
+		cout << "------------------------------------------" << endl;
+	}
+
+	void computerPlayerSummary() {
+		if (computerPlayer.isBlackjack())
+		{
+			computerPlayer.getWinningAmount();
 		}
 		else
 		{
-			for (int index = 0; index < players.size(); ++index)
+			computerPlayer.playerCurrentHandValue();
+			//check if computer player is busted first
+			if (computerPlayer.isBusted(computerPlayer.getPlayerHandTotal())){}
+			//If computer player and deale have the same pts, there's no winner
+			else if (computerPlayer.isEqualHand(computerPlayer.getPlayerHandTotal(), dealer.getPlayerHandTotal()))
 			{
-				if (!(players.at(index).isBusted()) && !(players.at(index).hasBlackJack()))
-				{
-					if (players.at(index).isEqualHand(dealer.getPlayerHandTotal()))
-					{
-						//something to indicate draw
-					}
-					else if (players.at(index).playerWins(dealer.getPlayerHandTotal()))
-					{
-						//payout winning player
-						players.at(index).winBet();
-					}
-					else
-					{
-						//player loses money
-						players.at(index).loseBet();
-					}
-				}
+				computerPlayer.drawRound();
+			}
+			//Players wins, if not busted and have more points than the dealer
+			else if (computerPlayer.playerWins(computerPlayer.getPlayerHandTotal(), dealer.getPlayerHandTotal()))
+			{
+				computerPlayer.getWinningAmount();
 			}
 		}
-
+		cout << "Computer Player Balance: " << computerPlayer.getBalance() << endl;
+		cout << "------------------------------------------" << endl;
 	}
 
-	string showDealerInitialHand() {
-		string dealerCards;
-		string symbol = "|#| ";
-		dealerCards = "Dealer: " + symbol + dealer.showOneCard() + " " + "\n";
-		return dealerCards;
-	}
-
-	string showPlayerCards(int playerIndex)
-	{
-		string playerCards;
-		for (int index = 0; index < players.at(playerIndex).getPlayerHand().size(); index++)
+	void gameSummary() {
+		cout <<  Player::gameSummary();
+		for (int index = 0; index < players.size(); index++)
 		{
-			playerCards += players.at(playerIndex).getPlayerHand().at(index) + " ";
-		}
-
-		return playerCards;
-	}
-	friend ostream& operator <<(ostream& os, Table& table) {
-		for (int index = 0; index < table.players.size(); index++) {
-			os << "Player " << index +1 << ": " << table.players[index] <<" ";
-			os << endl;
-		}
-
-		
-		return os;
-	}
-	void reset()
-	{
-		for (int index = 0; index < players.size(); ++index)
-		{
-			if (players.at(index).emptyPockets())
+			cout << "Player: " << index + 1 << " | Balance: " << players[index].getBalance() << endl;
+			if (players[index].isBlackjack())
 			{
-				players.erase(players.begin() + index);
-				--numberOfPlayers;
+				players[index].getWinningAmount();
+				cout << "Current Hand: " << players[index] << endl;
+				cout << "Blackjack!!! " << endl;
 			}
 			else
-				players.at(index).playerReset();
+			{
+				cout << "Current Hand: " << players[index] << endl;
+				players[index].playerCurrentHandValue();
+				//check if player has busted first
+				if (players[index].isBusted(players[index].getPlayerHandTotal()))
+				{
+					cout << "Player Bets: " << players[index].getPlayerBets() << endl;
+			
+				}
+
+				//check if player and dealer have same amount of points, if so, there's no winner
+				else if (players[index].isEqualHand(players[index].getPlayerHandTotal(), dealer.getPlayerHandTotal()))
+				{
+					cout << "Player Bets: " << players[index].getPlayerBets() << endl;
+					cout << "*** No Winner ***" << endl;
+					players[index].drawRound();
+				}
+
+				//Players wins, if not busted and have more points than the dealer
+				else if (players[index].playerWins(players[index].getPlayerHandTotal(), dealer.getPlayerHandTotal()))
+				{
+					cout << "Player Bets: " << players[index].getPlayerBets() << endl;
+					players[index].getWinningAmount();
+				}
+				else
+				{
+					cout << "Player Bets: " << players[index].getPlayerBets() << endl;
+				}
+			}
+			cout << "Player Hand Total: " << players[index].getPlayerHandTotal() << endl;
+			cout << "Current Balance: " << players[index].getBalance() << endl;
+			cout << "------------------------------------------" << endl;
 		}
-		dealer.playerReset();
-		this->deckStatus();
+		computerPlayerSummary();
 	}
 
 };

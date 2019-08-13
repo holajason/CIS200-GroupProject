@@ -22,13 +22,12 @@
     <ClInclude Include="Deck.h" />
     <ClInclude Include="Player(new).h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Table2.h" />
     <ClInclude Include="Table.h" />
-    <ClInclude Include="tableRework.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="mainRework.cpp" />
-    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="source.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
