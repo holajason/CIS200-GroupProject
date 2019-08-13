@@ -11,7 +11,7 @@ private:
 	Deck deck;
 	void deckStatus()
 	{
-		cout << "Deck Size: " << deck.getNumberOfCards();
+		//cout << "Deck Size: " << deck.getNumberOfCards();
 		if (deck.getNumberOfCards() <= 30)
 		{
 			deck.reshuffle();
