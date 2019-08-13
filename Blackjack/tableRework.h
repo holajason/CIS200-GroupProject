@@ -180,7 +180,7 @@ public:
 			//check if computer player is busted first
 			if (computerPlayer.isBusted(computerPlayer.getPlayerHandTotal()))
 			{
-				cout << "Computer Player Bets: " << computerPlayer.getPlayerBets() << endl;
+				computerPlayer.losingRound();
 			}
 			//If computer player and deale have the same pts, there's no winner
 			else if (computerPlayer.isEqualHand(computerPlayer.getPlayerHandTotal(), dealer.getPlayerHandTotal()))
@@ -216,6 +216,7 @@ public:
 				if (players[index].isBusted(players[index].getPlayerHandTotal()))
 				{
 					cout << "Player Bets: " << players[index].getPlayerBets() << endl;
+					players[index].losingRound();
 				}
 
 				//check if player and dealer have same amount of points, if so, there's no winner

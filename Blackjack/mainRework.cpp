@@ -20,7 +20,7 @@ int main() {
 			cout << "1. Play Again" << endl;
 			cout << "2. Quit" << endl;
 			cin >> menuOption;
-		} while (menuOption != 2);
+		} while (menuOption == 1);
 	}
 	catch (exception& e) {
 		cout << e.what();

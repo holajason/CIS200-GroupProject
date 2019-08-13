@@ -80,7 +80,6 @@ public:
 	bool isBusted(int playerHandTotal)
 	{
 		return (playerHandTotal > 21);
-		this->playerBalance -= playerBet;
 	}
 
 	//Pre: Helper function that check the first two cards
@@ -169,6 +168,11 @@ public:
 		this->playerBalance += this->playerBet * 2;
 		return playerBalance;
     }
+
+	int losingRound() {
+		this->playerBalance -= playerBet;
+		return playerBalance;
+	}
 	int getBalance() 
 	{
 		return this->playerBalance;
