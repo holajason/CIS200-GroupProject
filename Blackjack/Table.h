@@ -9,7 +9,6 @@ private:
 	Player dealer;
 	Player computerPlayer;
 	Deck deck;
-	string card;
 	void deckStatus()
 	{
 		cout << "Deck Size: " << deck.getNumberOfCards();
@@ -33,12 +32,9 @@ public:
 		{
 			for (int index = 0; index < players.size(); ++index)
 			{
-			//	card = deck.drawCards();
 				players[index].addOneCardToHand(deck.drawCards());
 			}
-			//card = deck.drawCards();
 			dealer.addOneCardToHand(deck.drawCards());
-			//card = deck.drawCards();
 			computerPlayer.addOneCardToHand(deck.drawCards());
 		}
 		deckStatus();
@@ -106,10 +102,9 @@ public:
 					cin >> choice;
 					switch (choice) {
 					case 1:
-						card = deck.drawCards();
 						cout << "===================================" << endl;
 						cout << "Player: " << index + 1 << " | ";
-						players[index].addOneCardToHand(card);
+						players[index].addOneCardToHand(deck.drawCards());
 						cout << "Current hand: " << players[index] << endl;
 						if (players[index].isBusted(players[index].playerCurrentHandValue())) //check if busted
 						{
@@ -143,8 +138,7 @@ public:
 			computerPlayer.playerCurrentHandValue();
 			if (computerPlayer.HitOrStand(computerPlayer.getPlayerHandTotal(), dealer.displayOneCard()))
 			{
-				card = deck.drawCards();
-				computerPlayer.addOneCardToHand(card);
+				computerPlayer.addOneCardToHand(deck.drawCards());
 				again = false;
 			}
 			else
@@ -162,8 +156,7 @@ public:
 		{
 			cout << "DEALER Hand: " << dealer << endl;
 			dealer.playerCurrentHandValue();
-			card = deck.drawCards();
-			dealer.addOneCardToHand(card);
+			dealer.addOneCardToHand(deck.drawCards());
 		} while (!(dealer.getPlayerHandTotal() >= 17));	//draw another card until 17 or more
 		cout << "Dealer Hand Total : " << dealer.getPlayerHandTotal() << endl;
 		cout << "------------------------------------------" << endl;
