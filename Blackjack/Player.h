@@ -30,9 +30,12 @@ public:
     int getCardValue(string card)
 	{
         int cardValue = 0;
-         if(card == "J" || card == "Q" || card == "K"){
-            cardValue = 10;
-        }
+		if (card == "J" || card == "Q" || card == "K") {
+			cardValue = 10;
+		}
+		 else if (card == "A") {
+			 cardValue = 0;
+		 }
 		 else {
 			 cardValue = stoi(card);
 		 }
