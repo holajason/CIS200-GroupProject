@@ -20,7 +20,7 @@ public:
 
 	//Pre: Function that will hand pthe player a card
 	//Pos: Hand a card to the player
-	void distributeCards(string card)
+	void addOneCardToHand(string card)
 	{
 		playerHand.emplace_back(card);
 	}
