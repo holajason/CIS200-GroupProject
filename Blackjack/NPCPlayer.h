@@ -1,20 +1,16 @@
 #pragma once
 #include "Player.h"
-class NPCPlayer : public Players {
+class NPCPlayer : public Player {
 private:
 	int currentHandValue;
 	string cardTwo = "2";
 public:
-	NPCPlayer() : Players(1) {
-		Players::setPlayersBets(1);
-	}
-
-
+	
 	bool HitOrStand(int currentHandTotal, string dealerFaceUpCard)
 	{
 		if (currentHandTotal >= 17 && currentHandTotal <= 21)
 		{
-				return false;
+			return false;
 		}
 
 		if ((currentHandTotal >= 13 && dealerFaceUpCard == "2") ||
@@ -52,33 +48,6 @@ public:
 			return false;
 		}
 		
-		if (((getCardValue("A") == 11 && (currentHandTotal == 20 || currentHandTotal == 19)) && dealerFaceUpCard == "2") ||
-			((getCardValue("A") == 11 && (currentHandTotal == 20 || currentHandTotal == 19)) && dealerFaceUpCard == "3") ||
-			((getCardValue("A") == 11 && (currentHandTotal == 20 || currentHandTotal == 19)) && dealerFaceUpCard == "4") ||
-			((getCardValue("A") == 11 && (currentHandTotal == 20 || currentHandTotal == 19)) && dealerFaceUpCard == "5") ||
-			((getCardValue("A") == 11 && (currentHandTotal == 20 || currentHandTotal == 19)) && dealerFaceUpCard == "6") ||
-			((getCardValue("A") == 11 && (currentHandTotal == 20 || currentHandTotal == 19)) && dealerFaceUpCard == "7") ||
-			((getCardValue("A") == 11 && (currentHandTotal == 20 || currentHandTotal == 19)) && dealerFaceUpCard == "8") ||
-			((getCardValue("A") == 11 && (currentHandTotal == 20 || currentHandTotal == 19)) && dealerFaceUpCard == "9") ||
-			((getCardValue("A") == 11 && (currentHandTotal == 20 || currentHandTotal == 19)) && dealerFaceUpCard == "10") ||
-			((getCardValue("A") == 11 && (currentHandTotal == 20 || currentHandTotal == 19)) && dealerFaceUpCard == "J") ||
-			((getCardValue("A") == 11 && (currentHandTotal == 20 || currentHandTotal == 19)) && dealerFaceUpCard == "Q") ||
-			((getCardValue("A") == 11 && (currentHandTotal == 20 || currentHandTotal == 19)) && dealerFaceUpCard == "K") ||
-			((getCardValue("A") == 11 && (currentHandTotal == 20 || currentHandTotal == 19)) && dealerFaceUpCard == "A"))
-		{
-			return false;
-		}
-
-		if (((getCardValue("A") == 11 && (currentHandTotal == 18)) && dealerFaceUpCard == "2") ||
-			((getCardValue("A") == 11 && (currentHandTotal == 18)) && dealerFaceUpCard == "3") ||
-			((getCardValue("A") == 11 && (currentHandTotal == 18)) && dealerFaceUpCard == "4") ||
-			((getCardValue("A") == 11 && (currentHandTotal == 18)) && dealerFaceUpCard == "5") ||
-			((getCardValue("A") == 11 && (currentHandTotal == 18)) && dealerFaceUpCard == "6") ||
-			((getCardValue("A") == 11 && (currentHandTotal == 18)) && dealerFaceUpCard == "7") ||
-			((getCardValue("A") == 11 && (currentHandTotal == 18)) && dealerFaceUpCard == "8"))
-		{
-			return false;
-		}
 
 		return true;
 	}
