@@ -46,9 +46,9 @@ public:
 		{
 			for (int index = 0; index < players.size(); ++index)
 			{
-				players.at(index).addCardToHand(deck.drawCards());
+				players.at(index).addCardToHand(deck.drawCard());
 			}
-		dealer.addCardToHand(deck.drawCards());
+		dealer.addCardToHand(deck.drawCard());
 		}
 	}
 
@@ -61,7 +61,7 @@ public:
 	}
 	void playerHit(int playerIndex)
 	{
-		players.at(playerIndex).addCardToHand(deck.drawCards());
+		players.at(playerIndex).addCardToHand(deck.drawCard());
 		players.at(playerIndex).updatePlayerTotal();
 	}
 
@@ -73,7 +73,7 @@ public:
 	{
 		while (dealer.getPlayerHandTotal() < 17)
 		{
-			dealer.addCardToHand(deck.drawCards());
+			dealer.addCardToHand(deck.drawCard());
 			dealer.updatePlayerTotal();
 		}
 		if (dealer.isBusted())

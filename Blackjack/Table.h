@@ -1,7 +1,7 @@
 #pragma once
 #include "Player.h"
 
-class Table : Player
+class Table
 {
 private:
 	int numberOfPlayers;
@@ -32,10 +32,10 @@ public:
 		{
 			for (int index = 0; index < players.size(); ++index)
 			{
-				players[index].addOneCardToHand(deck.drawCards());
+				players[index].addOneCardToHand(deck.drawCard());
 			}
-			dealer.addOneCardToHand(deck.drawCards());
-			computerPlayer.addOneCardToHand(deck.drawCards());
+			dealer.addOneCardToHand(deck.drawCard());
+			computerPlayer.addOneCardToHand(deck.drawCard());
 		}
 		deckStatus();
 	}
@@ -104,12 +104,12 @@ public:
 					case 1:
 						cout << "===================================" << endl;
 						cout << "Player: " << index + 1 << " | ";
-						players[index].addOneCardToHand(deck.drawCards());
+						players[index].addOneCardToHand(deck.drawCard());
 						cout << "Current hand: " << players[index] << endl;
 						if (players[index].isBusted(players[index].playerCurrentHandValue())) //check if busted
 						{
 							cout << "*************" << endl;
-							cout << "*  Busted!  *" << endl;
+							cout << "*  Bust!  *" << endl;
 							cout << "*************" << endl;
 							choice = 2;
 							break;
@@ -131,14 +131,15 @@ public:
 		cout << "\nDEALER Hand: |#| " << dealer.displayOneCard() << endl;	
 	}
 
-	void computerPlayerTurn() {
+	void computerPlayerTurn() 
+	{
 		bool again = false;
 		while (!again)
 		{
 			computerPlayer.playerCurrentHandValue();
 			if (computerPlayer.HitOrStand(computerPlayer.getPlayerHandTotal(), dealer.displayOneCard()))
 			{
-				computerPlayer.addOneCardToHand(deck.drawCards());
+				computerPlayer.addOneCardToHand(deck.drawCard());
 				again = false;
 			}
 			else
@@ -156,12 +157,13 @@ public:
 		{
 			cout << "DEALER Hand: " << dealer << endl;
 			dealer.playerCurrentHandValue();
-			dealer.addOneCardToHand(deck.drawCards());
+			dealer.addOneCardToHand(deck.drawCard());
 		} while (!(dealer.getPlayerHandTotal() >= 17));	//draw another card until 17 or more
+
 		cout << "Dealer Hand Total : " << dealer.getPlayerHandTotal() << endl;
 		cout << "------------------------------------------" << endl;
 	}
-
+	
 	void computerPlayerSummary() {
 		if (computerPlayer.isBlackjack())
 		{
@@ -188,7 +190,7 @@ public:
 	}
 
 	void gameSummary() {
-		cout <<  Player::gameSummary();
+		
 		for (int index = 0; index < players.size(); index++)
 		{
 			cout << "Player: " << index + 1 << " | Balance: " << players[index].getBalance() << endl;
@@ -233,6 +235,7 @@ public:
 			cout << "------------------------------------------" << endl;
 		}
 		computerPlayerSummary();
+	
 	}
 
 };

@@ -33,7 +33,7 @@ public:
 
 	//Pre: Method that will draw a card from the top of the stack
 	//Pos: Drawing a card
-	string drawCards()
+	string drawCard()
 	{
 		string card = stackOfDeck.top();
 		stackOfDeck.pop();

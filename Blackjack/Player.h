@@ -133,6 +133,24 @@ public:
 		{
 			return false;
 		}
+		if (currentHandTotal >= 15 && dealerFaceUpCard == "10" ||
+			currentHandTotal >= 15 && dealerFaceUpCard == "J" ||
+			currentHandTotal >= 15 && dealerFaceUpCard == "Q" ||
+			currentHandTotal >= 15 && dealerFaceUpCard == "K")
+		{
+			return false;
+		}
+		if (currentHandTotal >= 16 && dealerFaceUpCard == "9" ||
+			currentHandTotal >= 16 && dealerFaceUpCard == "10" ||
+			currentHandTotal >= 16 && dealerFaceUpCard == "J" ||
+			currentHandTotal >= 16 && dealerFaceUpCard == "Q" ||
+			currentHandTotal >= 16 && dealerFaceUpCard == "K" ||
+			currentHandTotal >= 16 && dealerFaceUpCard == "A")
+		{
+			return false;
+		}
+
+
 		//Hit otherwise
 		return true;
 	}
@@ -180,14 +198,6 @@ public:
 		playerHand.clear();
 	}
 
-	string gameSummary() {
-		string outString = "";
-		outString = "\n\n";
-		outString += "*******************************************\n";
-		outString+= "*              Game Overview              *\n";
-		outString+= "*******************************************\n";
-		return outString;
-	}
 	friend ostream& operator << (ostream& os, Player& player) 
 	{
 		for (int index = 0; index < player.playerHand.size(); index++) 
