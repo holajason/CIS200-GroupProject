@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Deck.h" />
+    <ClInclude Include="NPCPlayer.h" />
     <ClInclude Include="Player(new).h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Table2.h" />

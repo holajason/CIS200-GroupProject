@@ -1,5 +1,7 @@
 #pragma once
 #include "Player.h"
+#include "NPCPlayer.h"
+
 
 class Table
 {
@@ -7,7 +9,7 @@ private:
 	int numberOfPlayers;
 	vector<Player> players;
 	Player dealer;
-	Player computerPlayer;
+	NPCPlayer computerPlayer;
 	Deck deck;
 	void deckStatus()
 	{
@@ -106,7 +108,7 @@ public:
 						cout << "Player: " << index + 1 << " | ";
 						players[index].addOneCardToHand(deck.drawCard());
 						cout << "Current hand: " << players[index] << endl;
-						if (players[index].isBusted(players[index].playerCurrentHandValue())) //check if busted
+						if (players[index].isBusted(players[index].getPlayerHandTotal())) //check if busted
 						{
 							cout << "*************" << endl;
 							cout << "*  Bust!  *" << endl;
@@ -136,7 +138,7 @@ public:
 		bool again = false;
 		while (!again)
 		{
-			computerPlayer.playerCurrentHandValue();
+			computerPlayer.updatePlayerHandTotal();
 			if (computerPlayer.HitOrStand(computerPlayer.getPlayerHandTotal(), dealer.displayOneCard()))
 			{
 				computerPlayer.addOneCardToHand(deck.drawCard());
@@ -156,7 +158,7 @@ public:
 		do
 		{
 			cout << "DEALER Hand: " << dealer << endl;
-			dealer.playerCurrentHandValue();
+			dealer.updatePlayerHandTotal();
 			dealer.addOneCardToHand(deck.drawCard());
 		} while (!(dealer.getPlayerHandTotal() >= 17));	//draw another card until 17 or more
 
@@ -171,7 +173,7 @@ public:
 		}
 		else
 		{
-			computerPlayer.playerCurrentHandValue();
+			computerPlayer.updatePlayerHandTotal();
 			//check if computer player is busted first
 			if (computerPlayer.isBusted(computerPlayer.getPlayerHandTotal())){}
 			//If computer player and deale have the same pts, there's no winner
@@ -203,7 +205,7 @@ public:
 			else
 			{
 				cout << "Current Hand: " << players[index] << endl;
-				players[index].playerCurrentHandValue();
+				players[index].updatePlayerHandTotal();
 				//check if player has busted first
 				if (players[index].isBusted(players[index].getPlayerHandTotal()))
 				{

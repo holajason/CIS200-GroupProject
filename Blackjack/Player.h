@@ -7,15 +7,29 @@ private:
 	int playerBalance;
 	int playerBet;
     int playerHandTotal;
-	int currentHandValue;
 	vector<string>playerHand;
+
+	int getCardValue(string card)
+	{
+		int cardValue = 0;
+		if (card == "J" || card == "Q" || card == "K") {
+			cardValue = 10;
+		}
+		else if (card == "A") {
+			cardValue = 0;
+		}
+		else {
+			cardValue = stoi(card);
+		}
+		return cardValue;
+	}
+
 public:
 	Player()
 	{
 		this->playerBalance = 100;
 		this->playerBet = 0;
         this->playerHandTotal = 0;
-		this->currentHandValue = 0;
 	}
 
 	//Pre: Function that will hand pthe player a card
@@ -24,27 +38,11 @@ public:
 	{
 		playerHand.emplace_back(card);
 	}
-
-	//Pre: Function that will return a card value
-	//Pos: Return card value
-    int getCardValue(string card)
-	{
-        int cardValue = 0;
-		if (card == "J" || card == "Q" || card == "K") {
-			cardValue = 10;
-		}
-		 else if (card == "A") {
-			 cardValue = 0;
-		 }
-		 else {
-			 cardValue = stoi(card);
-		 }
-        return cardValue;
-    }
+  
 
 	//Pre: Function that will track the player hand total after receiving a card from the dealer
 	//Pos: Function that tracks the current hand-value of the player
-    int playerCurrentHandValue()
+    void updatePlayerHandTotal()
 	{
         int currentPts= 0;
 		//First iteration that will add all cards value except A's
@@ -65,7 +63,6 @@ public:
 			}
 		}
         playerHandTotal = currentPts;
-        return playerHandTotal;
     }
     
 	//Pre: If the player first two cards is A and a 10 pts card, player will wins automatically
@@ -111,48 +108,6 @@ public:
 	string displayOneCard() 
 	{
 		return playerHand.at(1);
-	}
-
-	bool HitOrStand(int currentHandTotal, string dealerFaceUpCard)
-	{
-		//If player hand value is greater or equal to 17 or greater, stand
-		if (currentHandTotal >= 17)
-		{
-			return false;
-		}
-		//If player hand value is equal to 13 and dealer face-up card is 2 or 3, stand
-		if ((currentHandTotal >= 13 && dealerFaceUpCard == "2") ||
-			(currentHandTotal >= 13 && dealerFaceUpCard == "3"))
-		{
-			return false;
-		}
-		//If player hand value is equal to 12 or more and dealer face-up card is 4, 5 or 6, stand 
-		if ((currentHandTotal >= 12 && dealerFaceUpCard == "4") ||
-			(currentHandTotal >= 12 && dealerFaceUpCard == "5") ||
-			(currentHandTotal >= 12 && dealerFaceUpCard == "6"))
-		{
-			return false;
-		}
-		if (currentHandTotal >= 15 && dealerFaceUpCard == "10" ||
-			currentHandTotal >= 15 && dealerFaceUpCard == "J" ||
-			currentHandTotal >= 15 && dealerFaceUpCard == "Q" ||
-			currentHandTotal >= 15 && dealerFaceUpCard == "K")
-		{
-			return false;
-		}
-		if (currentHandTotal >= 16 && dealerFaceUpCard == "9" ||
-			currentHandTotal >= 16 && dealerFaceUpCard == "10" ||
-			currentHandTotal >= 16 && dealerFaceUpCard == "J" ||
-			currentHandTotal >= 16 && dealerFaceUpCard == "Q" ||
-			currentHandTotal >= 16 && dealerFaceUpCard == "K" ||
-			currentHandTotal >= 16 && dealerFaceUpCard == "A")
-		{
-			return false;
-		}
-
-
-		//Hit otherwise
-		return true;
 	}
 
 	int getPlayerHandTotal()
