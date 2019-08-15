@@ -24,7 +24,7 @@ public:
 	Table(int numberOfPlayers)
 	{
 		this->numberOfPlayers = getNumberOfPlayers( numberOfPlayers);
-		this->players.resize(numberOfPlayers);
+		this->players.resize(this->numberOfPlayers);
 		deck.createDeck();
 	}
 
@@ -108,6 +108,7 @@ public:
 						cout << "Player: " << index + 1 << " | ";
 						players[index].addOneCardToHand(deck.drawCard());
 						cout << "Current hand: " << players[index] << endl;
+						players[index].updatePlayerHandTotal();
 						if (players[index].isBusted(players[index].getPlayerHandTotal())) //check if busted
 						{
 							cout << "*************" << endl;
