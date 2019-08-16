@@ -23,7 +23,7 @@ private:
 public:
 	Table(int numberOfPlayers)
 	{
-		this->numberOfPlayers = getNumberOfPlayers( numberOfPlayers);
+        setNumberOfPlayers( numberOfPlayers);
 		this->players.resize(numberOfPlayers);
 		deck.createDeck();
 	}
@@ -42,13 +42,13 @@ public:
 		deckStatus();
 	}
 
-	int getNumberOfPlayers(int numPlayers)
+	int setNumberOfPlayers(int numPlayers)
 	{
 		if (numPlayers <= 0 || numPlayers > 10)
 		{
 			throw invalid_argument("Invalid Number Of Players(1-10)");
 		}
-		return numPlayers;
+		return this-> numberOfPlayers = numPlayers;
 	}
 
 	void removeInsufficientFundPlayer() {
