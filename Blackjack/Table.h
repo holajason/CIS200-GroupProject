@@ -47,7 +47,7 @@ public:
 
 	int setNumberOfPlayers(int numPlayers)
 	{
-		if (numPlayers <= 0 || numPlayers > 10)
+		if (numPlayers < 0 || numPlayers > 10)
 		{
 			throw invalid_argument("Invalid Number Of Players(1-10)");
 		}
