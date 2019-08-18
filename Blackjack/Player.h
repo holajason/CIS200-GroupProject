@@ -7,6 +7,7 @@ private:
 	int playerBalance;
 	int playerBet;
     int playerHandTotal;
+	bool removed;
 	vector<string>playerHand;
 
 	int getCardValue(string card)
@@ -30,6 +31,7 @@ public:
 		this->playerBalance = 100;
 		this->playerBet = 0;
         this->playerHandTotal = 0;
+		this->removed = false;
 	}
 
 	//Pre: Function that will hand pthe player a card
@@ -153,6 +155,20 @@ public:
 		playerHand.clear();
 	}
 
+	bool isBroke()
+	{
+		return this->playerBalance <= 0;
+	}
+
+	void removePlayer()
+	{
+		this->removed = true;
+	}
+
+	bool isRemoved()
+	{
+		return removed;
+	}
 	friend ostream& operator << (ostream& os, Player& player) 
 	{
 		for (int index = 0; index < player.playerHand.size(); index++) 

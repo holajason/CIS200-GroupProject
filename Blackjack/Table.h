@@ -34,6 +34,8 @@ public:
 		{
 			for (int index = 0; index < players.size(); ++index)
 			{
+				if (players[index].isRemoved())
+					continue;
 				players[index].addOneCardToHand(deck.drawCard());
 			}
 			dealer.addOneCardToHand(deck.drawCard());
@@ -51,22 +53,28 @@ public:
 		return this-> numberOfPlayers = numPlayers;
 	}
 
-	void removeInsufficientFundPlayer() {
-		for (int index = 0; index < players.size(); index++)
+	void removeInsufficientFundPlayer()
+	{
+		int numberOfRemovedPlayers = 0;
+		for (int index = 0; index < players.size(); ++index)
 		{
-			if (players[index].getBalance() <= 0) {
-				players.erase(players.begin() + index); //Remove player
-			}
-			if (players.size() <= 0)
+			if (players[index].isBroke())
 			{
-				throw invalid_argument( "Not Enought Players. \n");
+				players[index].removePlayer();
+				numberOfRemovedPlayers++;
 			}
+		}
+		if (numberOfRemovedPlayers == players.size())
+		{
+			throw invalid_argument("No more players at table\n");
 		}
 	}
 
 	void getPlayersBet() {
 		int playerBets;
 		for (int index = 0; index < players.size(); index++) {
+			if (players[index].isRemoved())
+				continue;
 			players[index].playAgain(); // reset player hand
 			dealer.playAgain();			//reset dealer hand
 			computerPlayer.playAgain();
@@ -84,6 +92,8 @@ public:
 		int choice;
 		for (int index = 0; index < players.size(); index++)
 		{
+			if (players[index].isRemoved())
+				continue;
 			cout << "\n-----------------------------------" << endl;
 			cout << "Player: " << index + 1 << " | " << "Current Balance: " << players[index].getBalance() << endl;
 			cout << "Current hand: " << players[index] << endl;	//display current hand
@@ -196,6 +206,8 @@ public:
 		
 		for (int index = 0; index < players.size(); index++)
 		{
+			if (players[index].isRemoved())
+				continue;
 			cout << "Player: " << index + 1 << " | Balance: " << players[index].getBalance() << endl;
 			if (players[index].isBlackjack())
 			{

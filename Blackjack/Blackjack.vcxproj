@@ -27,7 +27,6 @@
     <ClInclude Include="Table.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
     <ClCompile Include="source.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
