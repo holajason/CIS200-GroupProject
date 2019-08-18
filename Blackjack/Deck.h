@@ -31,12 +31,15 @@ public:
 		}
 	}
 
-	//Pre: Method that will draw a card from the top of the stack
-	//Pos: Drawing a card
+	//Pre: Method that will draw a card from the top of the stack and reshuffle is size less than 30
+	//Pos: Drawing a card and reshuffle deck when less than 30
 	string drawCard()
 	{
 		string card = stackOfDeck.top();
 		stackOfDeck.pop();
+		if (stackOfDeck.size() < 30) {
+			reshuffle();
+		}
 		return card;
 	}
 

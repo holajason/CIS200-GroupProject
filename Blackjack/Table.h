@@ -13,11 +13,12 @@ private:
 	Deck deck;
 	void deckStatus()
 	{
-		//cout << "Deck Size: " << deck.getNumberOfCards();
-		if (deck.getNumberOfCards() <= 30)
-		{
-			deck.reshuffle();
+		/*
+		cout << "Deck Size: " << deck.getNumberOfCards();
+		if (stackOfDeck.size() < 30) {
+			reshuffle();
 		}
+		*/
 	}
 
 public:
@@ -41,7 +42,7 @@ public:
 			dealer.addOneCardToHand(deck.drawCard());
 			computerPlayer.addOneCardToHand(deck.drawCard());
 		}
-		deckStatus();
+		//deckStatus();
 	}
 
 	int setNumberOfPlayers(int numPlayers)

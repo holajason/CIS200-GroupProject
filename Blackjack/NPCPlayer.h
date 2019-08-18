@@ -32,20 +32,16 @@ public:
 			return false;
 		}
 
-		if (((currentHandTotal == 16) && dealerFaceUpCard == "9") ||
-			((currentHandTotal == 16) && dealerFaceUpCard == "10") ||
-			((currentHandTotal == 16) && dealerFaceUpCard == "J") ||
-			((currentHandTotal == 16) && dealerFaceUpCard == "Q") ||
-			((currentHandTotal == 16) && dealerFaceUpCard == "K") ||
-			((currentHandTotal == 16) && dealerFaceUpCard == "A"))
+		if ((currentHandTotal >= 15 && dealerFaceUpCard == "10") ||
+		    (currentHandTotal >= 15 && dealerFaceUpCard == "J") ||
+		    (currentHandTotal >= 15 && dealerFaceUpCard == "Q") ||
+		    (currentHandTotal >= 15 && dealerFaceUpCard == "K"))
 		{
 			return false;
 		}
 
-		if ((currentHandTotal == 15 && dealerFaceUpCard == "10") ||
-		    (currentHandTotal == 15 && dealerFaceUpCard == "J") ||
-		    (currentHandTotal == 15 && dealerFaceUpCard == "Q") ||
-		    (currentHandTotal == 15 && dealerFaceUpCard == "K"))
+		if ((currentHandTotal == 16 && dealerFaceUpCard == "9") ||
+			(currentHandTotal == 16 && dealerFaceUpCard == "A"))
 		{
 			return false;
 		}

@@ -4,6 +4,7 @@ int main() {
 	srand(unsigned(time(0)));
 	int numPlayers;
 	int menuOption;
+	Deck deck;
 	try {
 		cout << "Players Per Table: ";
 		cin >> numPlayers;
