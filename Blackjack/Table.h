@@ -15,7 +15,7 @@ private:
 	{
 		/*
 		cout << "Deck Size: " << deck.getNumberOfCards();
-		if (stackOfDeck.size() < 30) {
+		if deck.getNumberOfCards() <= 30 < 30) {
 			reshuffle();
 		}
 		*/
@@ -122,9 +122,9 @@ public:
 						players[index].updatePlayerHandTotal();
 						if (players[index].isBusted(players[index].getPlayerHandTotal())) //check if busted
 						{
-							cout << "*************" << endl;
-							cout << "*  Bust!  *" << endl;
-							cout << "*************" << endl;
+							cout << "**************" << endl;
+							cout << "*    Bust!   *" << endl;
+							cout << "**************" << endl;
 							choice = 2;
 							break;
 						}
